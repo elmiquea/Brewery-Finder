@@ -8,8 +8,6 @@ The purpose of this application is to allow beer enthusiasts to find breweries n
 
 ## Features
 
-A weather dashboard with a search button and dropdown menu is presented
-
 When a brewery type is selected, and search button is clicked, the five closest breweries are presented
 
 
