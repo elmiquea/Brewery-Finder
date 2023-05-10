@@ -12,20 +12,20 @@
 
 <body>
     <header>
-        <h1>Brewery Finder</h1>
+        <h1 class="has-text-centered">Brewery Finder</h1>
     </header>
 
 
-    <div class="columns">
-        <div class="column">
+    <div class="columns is-centered">
+        <div class="column has-text-centered">
             <div class="field">
                 <p class="control has-icons-left">
                     <span class="select">
                         <select id="dropdown-ip">
-                            <option>Micro</option>
-                            <option>Nano</option>
-                            <option>Brewpub</option>
-                            <option>Bar</option>
+                            <option>micro</option>
+                            <option>nano</option>
+                            <option>brewpub</option>
+                            <option>bar</option>
                         </select>
                     </span>
                     <span class="icon is-small is-left">
@@ -34,24 +34,22 @@
                 </p>
             </div>
 
-            <div class="field is-grouped">
-                <p class="control">
-                    <a class="button is-info" id="search-button-ip">
-                        Search by IP
-                    </a>
-                </p>
-            </div>
+            <p class="control">
+                <a class="button is-info" id="search-button-ip">
+                    Search by IP
+                </a>
+            </p>
         </div>
 
-        <div class="column">
+        <div class="column has-text-centered">
             <div class="field">
                 <p class="control has-icons-left">
                     <span class="select">
                         <select id="dropdown-zip">
-                            <option>Micro</option>
-                            <option>Nano</option>
-                            <option>Brewpub</option>
-                            <option>Bar</option>
+                            <option>micro</option>
+                            <option>nano</option>
+                            <option>brewpub</option>
+                            <option>bar</option>
                         </select>
                     </span>
                     <span class="icon is-small is-left">
@@ -59,22 +57,20 @@
                     </span>
                 </p>
             </div>
-
-            <div class="field is-grouped">
+            <div class="field">
                 <p class="control">
-                    <input class="input" type="text" placeholder="Enter Zip Code" id="input-search">
+                    <input class="input is-rounded" style="width: 30%" type="number" placeholder="Enter Zip Code" id="input-search">
                 </p>
             </div>
-
-            <div class="field is-grouped">
-                <p class="control">
-                    <a class="button is-info" id="search-button-zip">
-                        Search by Zip
-                    </a>
-                </p>
-            </div>
+            <div class="field">
+            <p class="control">
+                <a class="button is-info" id="search-button-zip">
+                    Search by Zip
+                </a>
+            </p>
         </div>
 
+        </div>
     </div>
 
 

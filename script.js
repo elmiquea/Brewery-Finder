@@ -3,23 +3,27 @@ const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
-const dropdownZipVal = dropdownZipEl.value;
-const dropdownIPVal = dropdownIPEl.value;
+
+
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
 searchButtonZip.addEventListener("click", function () {
-    // getBreweryZip()
     const inputVal = inputEl.value;
+    const dropdownZipVal = dropdownZipEl.value;
     console.log(inputVal);
+    getBreweryZip(dropdownZipVal, inputVal);
+    console.log(dropdownZipVal);
 })
 
 searchButtonIP.addEventListener("click", function () {
     const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
-    fetchGeo(APIRequestIP);
+    const dropdownIPVal = dropdownIPEl.value;
+    fetchGeo(APIRequestIP, dropdownIPVal);
+    console.log(dropdownIPVal);
 })
 
-function fetchGeo(API) {
+function fetchGeo(API, dropdownIPVal) {
     fetch(API)
         .then(function (response) {
             return response.json();
@@ -30,7 +34,7 @@ function fetchGeo(API) {
             console.log(lat);
             const lon = data.location.longitude;
             console.log(lon);
-            getBreweryIP(lat, lon);
+            getBreweryIp(dropdownIPVal, lat, lon);
         })
 };
 
@@ -69,4 +73,5 @@ favoriteBox.addEventListener("click", function(event) {
         localStorage.setItem("<[brewery.name]>", "<brewery.info>");
     }
 });
+
 
