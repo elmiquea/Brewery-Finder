@@ -65,3 +65,13 @@ function getBreweryZip (breweryType, zip) {
         console.log (data);
     })  
 }
+
+favoriteBox.addEventListener("click", function(event) {
+    const element = event.target;
+
+    if (element.matches == ".favebox") {
+        localStorage.setItem("<[brewery.name]>", "<brewery.info>");
+    }
+});
+
+
