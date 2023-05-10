@@ -66,7 +66,7 @@ favoriteBox.addEventListener("click", function(event) {
     const element = event.target;
 
     if (element.matches == ".favebox") {
-        localStorage.setItem("<brewery.name>", "<brewery.info>");
+        localStorage.setItem("<[brewery.name]>", "<brewery.info>");
     }
 });
 
