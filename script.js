@@ -3,8 +3,9 @@ const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
-
-
+const faveBrewEl = document.getElementById('fave-brew')
+const seeFaveBrewEl = document.getElementById('see-fave-brews')
+let brewArray = localStorage.getItem("BrewArray")
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
@@ -68,10 +69,34 @@ function getBreweryZip (breweryType, zip) {
 
 favoriteBox.addEventListener("click", function(event) {
     const element = event.target;
-
+    const newEntry = {
+        name: data.name,
+        address: data.address1,
+        url: data.url
+    }
     if (element.matches == ".favebox") {
-        localStorage.setItem("<[brewery.name]>", "<brewery.info>");
+        if (brewArray == "null") {
+            brewArray = [newEntry];
+        } else {
+            brewArray.push(newEntry);
+        }
+        localStorage.setItem("BrewArray", JSON.stringify(brewArray));
     }
 });
 
+seeFaveBrewEl.addEventListener("click", function (event) {
+    const element = event.target;
 
+    if (element.matches == "see-fave-brews") {
+        if (brewArray != "null") {
+            brewArray = JSON.parse(localStorage.getItem("brewArray"));
+            for (let i = 0; i, brewArray.length; i++) {
+                const brewery = document.createElement("p");
+                const brewText = "Name: " + brewArray[i].name + "\xa0 - \xa0 Address: " +
+                    brewArray[i].address + "\xa0 - \xa0 Website: " + brewArray[i].url;
+                brewery.appendChild(brewText);
+                document.getElementById("fave-brew").appendChild(brewery);
+            }
+        }
+    }
+});
