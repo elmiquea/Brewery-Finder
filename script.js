@@ -7,7 +7,7 @@ const cardSection = document.getElementById("card-section");
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
-searchButtonZip.addEventListener("click", function () {
+searchButtonZip.addEventListener("click", function (event) {
     const inputVal = inputEl.value;
     const dropdownZipVal = dropdownZipEl.value;
     console.log(inputVal);
@@ -108,19 +108,25 @@ function buildBreweryCards(brewery) {
         const cardFooter = document.createElement("footer");
         cardFooter.classList.add("card-footer");
         cardDiv.appendChild(cardFooter);
+        //This is where I create the like button for each brewery
         const likeButton = document.createElement("a");
-        likeButton.classList.add("card-footer-item", "favbox");
+        likeButton.classList.add("card-footer-item", "favebox");
+        likeButton.setAttribute("data-name", breweryName);
+        likeButton.setAttribute("data-street", breweryAddress);
+        likeButton.setAttribute("data-city", breweryCity);
+        likeButton.setAttribute("data-state", breweryState);
+        likeButton.setAttribute("data-url", breweryWebsite);
         likeButton.textContent = "Like";
         cardFooter.appendChild(likeButton);
     };
 }
 
 
-// favoriteBox.addEventListener("click", function(event) {
-//     const element = event.target;
+favoriteBox.addEventListener("click", function(event) {
+    const element = event.target;
 
-//     if (element.matches == ".favebox") {
-//         localStorage.setItem("<[brewery.name]>", "<brewery.info>");
-//     }
-// });
+    if (element.matches == ".favebox") {
+        localStorage.setItem("<[brewery.name]>", "<brewery.info>");
+    }
+});
 
