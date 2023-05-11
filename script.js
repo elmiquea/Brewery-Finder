@@ -113,9 +113,7 @@ function buildBreweryCards(brewery) {
         const likeButton = document.createElement("a");
         likeButton.classList.add("card-footer-item", "favebox");
         likeButton.setAttribute("data-name", breweryName);
-        likeButton.setAttribute("data-street", breweryAddress);
-        likeButton.setAttribute("data-city", breweryCity);
-        likeButton.setAttribute("data-state", breweryState);
+        likeButton.setAttribute("data-address", breweryAddress);
         likeButton.setAttribute("data-url", breweryWebsite);
         likeButton.textContent = "Like";
         cardFooter.appendChild(likeButton);
