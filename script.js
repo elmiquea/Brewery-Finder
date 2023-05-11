@@ -7,7 +7,7 @@ const cardSection = document.getElementById("card-section");
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
-searchButtonZip.addEventListener("click", function (event) {
+searchButtonZip.addEventListener("click", function () {
     const inputVal = inputEl.value;
     const dropdownZipVal = dropdownZipEl.value;
     console.log(inputVal);
