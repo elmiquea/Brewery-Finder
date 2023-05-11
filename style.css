@@ -1,0 +1,27 @@
+html,
+body {
+    background-image: url(./assets/Wood-Light.jpg);
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 80px;
+    color: yellow;
+}
+
+.link {
+    text-decoration: none;
+    color: yellow;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+#empty {
+    height: 40px;
+}
