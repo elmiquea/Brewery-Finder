@@ -69,12 +69,13 @@ function getBreweryZip (breweryType, zip) {
 
 favoriteBox.addEventListener("click", function(event) {
     const element = event.target;
-    const newEntry = {
-        name: data.name,
-        address: data.address1,
-        url: data.url
-    }
-    if (element.matches == ".favebox") {
+    if (element.matches(".favebox")) {
+        //parse string associated with favorite box
+        // const newEntry = {
+        //     name: data.name,
+        //     address: data.address1,
+        //     url: data.url
+        // }
         if (brewArray == "null") {
             brewArray = [newEntry];
         } else {
@@ -89,7 +90,7 @@ seeFaveBrewEl.addEventListener("click", function (event) {
 
     if (element.matches == "see-fave-brews") {
         if (brewArray != "null") {
-            brewArray = JSON.parse(localStorage.getItem("brewArray"));
+            brewArray = JSON.parse(localStorage.getItem("BrewArray"));
             for (let i = 0; i, brewArray.length; i++) {
                 const brewery = document.createElement("p");
                 const brewText = "Name: " + brewArray[i].name + "\xa0 - \xa0 Address: " +
