@@ -72,10 +72,11 @@ function buildBreweryCards(brewery) {
     for(let i=0; i<brewery.length; i++){
         const breweryName = brewery[i].name;
         const breweryPhone = brewery[i].phone;
-        const breweryAddress = brewery[i].street;
+        const breweryStreet = brewery[i].street;
         const breweryCity = brewery[i].city;
         const breweryState = brewery[i].state;
         const breweryWebsite = brewery[i].website_url;
+        const breweryAddress = breweryStreet + ", " + breweryCity + ", " + breweryState;
         const columnDiv = document.createElement("div");
         columnDiv.classList.add("column", "is-11");
         cardSection.appendChild(columnDiv);
@@ -96,7 +97,7 @@ function buildBreweryCards(brewery) {
         cardContent.classList.add("content");
         cardMain.appendChild(cardContent);
         const address = document.createElement("h3");
-        address.textContent = breweryAddress + ", " + breweryCity + ", " + breweryState;
+        address.textContent = breweryStreet + ", " + breweryCity + ", " + breweryState;
         cardContent.appendChild(address);
         const phone = document.createElement("h4");
         phone.textContent = breweryPhone;
