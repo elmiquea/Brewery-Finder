@@ -3,8 +3,7 @@ const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
-
-
+const cardSection = document.getElementById("card-section");
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
@@ -49,6 +48,7 @@ function getBreweryIp (breweryType, lat, lon) {
     })
     .then (function(data) {
         console.log (data);
+        buildBreweryCards(data);
     })
 }
 
@@ -62,15 +62,65 @@ function getBreweryZip (breweryType, zip) {
         }
     })
     .then (function(data) {
-        console.log (data);
+        buildBreweryCards(data);
     })  
 }
 
-favoriteBox.addEventListener("click", function(event) {
-    const element = event.target;
+function buildBreweryCards(brewery) {
+    console.log(brewery);
+    cardSection.innerHTML="";
+    for(let i=0; i<brewery.length; i++){
+        const breweryName = brewery[i].name;
+        const breweryPhone = brewery[i].phone;
+        const breweryAddress = brewery[i].street;
+        const breweryCity = brewery[i].city;
+        const breweryState = brewery[i].state;
+        const breweryWebsite = brewery[i].website_url;
+        const columnDiv = document.createElement("div");
+        columnDiv.classList.add("column", "is-11");
+        cardSection.appendChild(columnDiv);
+        const cardDiv = document.createElement("div");
+        cardDiv.classList.add("card");
+        columnDiv.appendChild(cardDiv);
+        const cardHeader = document.createElement("header");
+        cardHeader.classList.add("card-header");
+        cardDiv.appendChild(cardHeader);
+        const cardHeaderTitle = document.createElement("p");
+        cardHeaderTitle.classList.add("card-header-title", "is-centered");
+        cardHeaderTitle.textContent = breweryName;
+        cardHeader.appendChild(cardHeaderTitle);
+        const cardMain = document.createElement("div");
+        cardMain.classList.add("card-content");
+        cardDiv.appendChild(cardMain);
+        const cardContent = document.createElement("div");
+        cardContent.classList.add("content");
+        cardMain.appendChild(cardContent);
+        const address = document.createElement("h3");
+        address.textContent = breweryAddress + ", " + breweryCity + ", " + breweryState;
+        cardContent.appendChild(address);
+        const phone = document.createElement("h4");
+        phone.textContent = breweryPhone;
+        cardContent.appendChild(phone);
+        const websiteLink = document.createElement("a");
+        websiteLink.href = breweryWebsite;
+        websiteLink.textContent = breweryWebsite;
+        cardContent.appendChild(websiteLink);
+        const cardFooter = document.createElement("footer");
+        cardFooter.classList.add("card-footer");
+        cardDiv.appendChild(cardFooter);
+        const likeButton = document.createElement("a");
+        likeButton.classList.add("card-footer-item", "favbox");
+        likeButton.textContent = "Like";
+        cardFooter.appendChild(likeButton);
+    };
+}
 
-    if (element.matches == ".favebox") {
-        localStorage.setItem("<[brewery.name]>", "<brewery.info>");
-    }
-});
+
+// favoriteBox.addEventListener("click", function(event) {
+//     const element = event.target;
+
+//     if (element.matches == ".favebox") {
+//         localStorage.setItem("<[brewery.name]>", "<brewery.info>");
+//     }
+// });
 
