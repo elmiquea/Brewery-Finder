@@ -1,4 +1,5 @@
 let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+const removeEl = document.querySelector(".remove");
 
 function displayFave() {
     if (brewArray != null) {
@@ -38,9 +39,39 @@ function displayFave() {
             const cardFooter = document.createElement("footer");
             cardFooter.classList.add("card-footer");
             cardDiv.appendChild(cardFooter);
-
+            const removeButton = document.createElement("a");
+            removeButton.classList.add("card-footer-item", "remove");
+            removeButton.setAttribute("data-name", brewArray[i].name);
+            removeButton.textContent = "Remove";
+            cardFooter.appendChild(removeButton)
         }
     }
 }
 
 displayFave();
+
+if (removeEl != null) {
+    removeEl.addEventListener("click", function (event) {
+        const element = event.target;
+        if (element.matches(".remove")) {
+            const removeArray = JSON.parse(localStorage.getItem("BrewArray"));
+            const removeName = element.getAttribute("data-name");
+            for (let i = 0; i < removeArray.length; i++) {
+                if (removeArray[i].name == removeName) {
+                    removeArray.splice(i, 1);
+                }
+            }
+
+            localStorage.setItem("BrewArray", JSON.stringify(removeArray));
+            removeCards();
+            displayFave();
+        }
+    });
+}
+
+function removeCards() {
+    const list = document.getElementById("fave-brew");
+    while (list.hasChildNodes()) {
+        list.removeChild(list.firstChild);
+    }
+}

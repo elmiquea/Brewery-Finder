@@ -157,7 +157,6 @@ if (likeEl != null) {
                 brewArray.push(newEntry);
             }
             localStorage.setItem("BrewArray", JSON.stringify(brewArray));
-            displayFave();
         }
     });
 }
