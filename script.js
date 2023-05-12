@@ -2,6 +2,7 @@ const searchButtonIP = document.getElementById('search-button-ip');
 const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
+const inputEl = document.getElementById('input-search');
 const seeFaveBrewEl = document.getElementById('see-fave-brews')
 let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 const cardSection = document.getElementById("card-section");
@@ -15,8 +16,10 @@ if (searchButtonZip != null) {
         const inputVal = inputEl.value;
         const dropdownZipVal = dropdownZipEl.value;
         console.log(inputVal);
+        if(inputVal && inputVal.length == 5){
         getBreweryZip(dropdownZipVal, inputVal);
         console.log(dropdownZipVal);
+        }
     })
 }
 
@@ -44,39 +47,39 @@ function fetchGeo(API, dropdownIPVal) {
         })
 };
 
-function getBreweryIp (breweryType, lat, lon) {
+function getBreweryIp(breweryType, lat, lon) {
     const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_dist=" + lat + "," + lon + "&per_page=5&by_type=" + breweryType;
 
     fetch(fetchUrl)
-    .then  (function(response) {
-        if (response.ok) {
-            return response.json();
-        }
-    })
-    .then (function(data) {
-        console.log (data);
-        buildBreweryCards(data);
-    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(function (data) {
+            console.log(data);
+            buildBreweryCards(data);
+        })
 }
 
-function getBreweryZip (breweryType, zip) {
+function getBreweryZip(breweryType, zip) {
     const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_postal=" + zip + "&per_page=5&by_type=" + breweryType;
 
     fetch(fetchUrl)
-    .then  (function(response) {
-        if (response.ok) {
-            return response.json();
-        }
-    })
-    .then (function(data) {
-        buildBreweryCards(data);
-    })  
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(function (data) {
+            buildBreweryCards(data);
+        })
 }
 
 function buildBreweryCards(brewery) {
     console.log(brewery);
-    cardSection.innerHTML="";
-    for(let i=0; i<brewery.length; i++){
+    cardSection.innerHTML = "";
+    for (let i = 0; i < brewery.length; i++) {
         const breweryName = brewery[i].name;
         const breweryPhone = brewery[i].phone;
         const breweryStreet = brewery[i].street;
@@ -107,11 +110,20 @@ function buildBreweryCards(brewery) {
         address.textContent = breweryStreet + ", " + breweryCity + ", " + breweryState;
         cardContent.appendChild(address);
         const phone = document.createElement("h4");
-        phone.textContent = breweryPhone;
+        if (!breweryPhone) {
+            phone.textContent = "No Phone Number Available"
+        } else {
+            phone.textContent = "Phone Number: " + breweryPhone;
+        }
+        console.log(breweryPhone);
         cardContent.appendChild(phone);
         const websiteLink = document.createElement("a");
-        websiteLink.href = breweryWebsite;
-        websiteLink.textContent = breweryWebsite;
+        if (!breweryWebsite) {
+            websiteLink.textContent = "No Website Available"
+        } else {
+            websiteLink.href = breweryWebsite;
+            websiteLink.textContent = breweryWebsite;
+        }
         cardContent.appendChild(websiteLink);
         const cardFooter = document.createElement("footer");
         cardFooter.classList.add("card-footer");
@@ -149,5 +161,4 @@ if (likeEl != null) {
         }
     });
 }
-
 
