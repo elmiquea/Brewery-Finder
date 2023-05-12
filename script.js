@@ -2,6 +2,7 @@ const searchButtonIP = document.getElementById('search-button-ip');
 const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
+const inputEl = document.getElementById('input-search');
 const seeFaveBrewEl = document.getElementById('see-fave-brews')
 let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 const cardSection = document.getElementById("card-section");
@@ -10,13 +11,17 @@ const likeEl = document.querySelector(".favebox");
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
-searchButtonZip.addEventListener("click", function () {
-    const inputVal = inputEl.value;
-    const dropdownZipVal = dropdownZipEl.value;
-    console.log(inputVal);
-    getBreweryZip(dropdownZipVal, inputVal);
-    console.log(dropdownZipVal);
-})
+if (searchButtonZip != null) {
+    searchButtonZip.addEventListener("click", function () {
+        const inputVal = inputEl.value;
+        const dropdownZipVal = dropdownZipEl.value;
+        console.log(inputVal);
+        if(inputVal && inputVal.length == 5){
+        getBreweryZip(dropdownZipVal, inputVal);
+        console.log(dropdownZipVal);
+        }
+    })
+}
 
 if (searchButtonIP != null) {
     searchButtonIP.addEventListener("click", function () {
@@ -135,38 +140,25 @@ function buildBreweryCards(brewery) {
     };
 }
 
-
-favoriteBox.addEventListener("click", function(event) {
-    const element = event.target;
-    if (element.matches(".favebox")) {
-        //parse string associated with favorite box
-        // const newEntry = {
-        //     name: data.name,
-        //     address: data.address1,
-        //     url: data.url
-        // }
-        if (brewArray == "null") {
-            brewArray = [newEntry];
-        } else {
-            brewArray.push(newEntry);
-        }
-        localStorage.setItem("BrewArray", JSON.stringify(brewArray));
-    }
-});
-
-seeFaveBrewEl.addEventListener("click", function (event) {
-    const element = event.target;
-
-    if (element.matches == "see-fave-brews") {
-        if (brewArray != "null") {
-            brewArray = JSON.parse(localStorage.getItem("BrewArray"));
-            for (let i = 0; i, brewArray.length; i++) {
-                const brewery = document.createElement("p");
-                const brewText = "Name: " + brewArray[i].name + "\xa0 - \xa0 Address: " +
-                    brewArray[i].address + "\xa0 - \xa0 Website: " + brewArray[i].url;
-                brewery.appendChild(brewText);
-                document.getElementById("fave-brew").appendChild(brewery);
+if (likeEl != null) {
+    likeEl.addEventListener("click", function (event) {
+        const element = event.target;
+        if (element.matches(".favebox")) {
+            //parse string associated with favorite box
+            const newEntry = {
+                name: element.getAttribute("data-name"),
+                address: element.getAttribute("data-address"),
+                phone: element.getAttribute("data-phone"),
+                url: element.getAttribute("data-url"),
             }
+            if (brewArray === null) {
+                brewArray = [newEntry];
+            } else {
+                brewArray.push(newEntry);
+            }
+            localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+            displayFave();
         }
-    }
-});
+    });
+}
+
