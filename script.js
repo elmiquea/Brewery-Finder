@@ -2,11 +2,10 @@ const searchButtonIP = document.getElementById('search-button-ip');
 const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
-const inputEl = document.getElementById('input-search');
-const faveBrewEl = document.getElementById('fave-brew')
 const seeFaveBrewEl = document.getElementById('see-fave-brews')
-let brewArray = localStorage.getItem("BrewArray")
+let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 const cardSection = document.getElementById("card-section");
+const likeEl = document.querySelector(".favebox");
 
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
@@ -15,18 +14,18 @@ searchButtonZip.addEventListener("click", function () {
     const inputVal = inputEl.value;
     const dropdownZipVal = dropdownZipEl.value;
     console.log(inputVal);
-    if (inputVal && inputVal.length == 5) {
-        getBreweryZip(dropdownZipVal, inputVal);
-    }
+    getBreweryZip(dropdownZipVal, inputVal);
     console.log(dropdownZipVal);
 })
 
-searchButtonIP.addEventListener("click", function () {
-    const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
-    const dropdownIPVal = dropdownIPEl.value;
-    fetchGeo(APIRequestIP, dropdownIPVal);
-    console.log(dropdownIPVal);
-})
+if (searchButtonIP != null) {
+    searchButtonIP.addEventListener("click", function () {
+        const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
+        const dropdownIPVal = dropdownIPEl.value;
+        fetchGeo(APIRequestIP, dropdownIPVal);
+        console.log(dropdownIPVal);
+    })
+}
 
 function fetchGeo(API, dropdownIPVal) {
     fetch(API)
@@ -129,6 +128,7 @@ function buildBreweryCards(brewery) {
         likeButton.classList.add("card-footer-item", "favebox");
         likeButton.setAttribute("data-name", breweryName);
         likeButton.setAttribute("data-address", breweryAddress);
+        likeButton.setAttribute("data-phone", breweryPhone);
         likeButton.setAttribute("data-url", breweryWebsite);
         likeButton.textContent = "Like";
         cardFooter.appendChild(likeButton);
@@ -136,7 +136,7 @@ function buildBreweryCards(brewery) {
 }
 
 
-favoriteBox.addEventListener("click", function (event) {
+favoriteBox.addEventListener("click", function(event) {
     const element = event.target;
     if (element.matches(".favebox")) {
         //parse string associated with favorite box
