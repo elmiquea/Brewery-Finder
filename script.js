@@ -16,9 +16,9 @@ if (searchButtonZip != null) {
         const inputVal = inputEl.value;
         const dropdownZipVal = dropdownZipEl.value;
         console.log(inputVal);
-        if(inputVal && inputVal.length == 5){
-        getBreweryZip(dropdownZipVal, inputVal);
-        console.log(dropdownZipVal);
+        if (inputVal && inputVal.length == 5) {
+            getBreweryZip(dropdownZipVal, inputVal);
+            console.log(dropdownZipVal);
         }
     })
 }
@@ -154,9 +154,15 @@ if (likeEl != null) {
             if (brewArray === null) {
                 brewArray = [newEntry];
             } else {
+                for (i = 0; i < brewArray.length; i++) {
+                    if (brewArray[i].name == newEntry.name) {
+                        return;
+                    }
+                }
                 brewArray.push(newEntry);
             }
             localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+
         }
     });
 }
