@@ -155,8 +155,17 @@ function buildBreweryCards(brewery) {
             likeButton.setAttribute("data-phone", breweryPhone);
             likeButton.setAttribute("data-url", breweryWebsite);
             likeButton.textContent = "Like";
+            const buttonName = likeButton.getAttribute("data-name");
             cardFooter.appendChild(likeButton);
-
+            for(j=0; j<brewArray.length; j++){
+            if(brewArray.length == 0|| !brewArray || brewArray[0] == null){
+    
+            } else {
+                if(brewArray[j].name == buttonName) {
+                likeButton.classList.add("liked");
+                likeButton.textContent = "Liked";
+                }
+            }}
             const dislikeButton = document.createElement("a");
             dislikeButton.classList.add("card-footer-item", "rembox");
             dislikeButton.setAttribute("data-name", breweryName);
@@ -170,7 +179,10 @@ function buildBreweryCards(brewery) {
 if (likeEl != null) {
     likeEl.addEventListener("click", function (event) {
         const element = event.target;
+        console.log(element);
         if (element.matches(".favebox")) {
+            element.classList.add("liked");
+            element.textContent = "Liked";
             //parse string associated with favorite box
             const newEntry = {
                 name: element.getAttribute("data-name"),
@@ -178,7 +190,7 @@ if (likeEl != null) {
                 phone: element.getAttribute("data-phone"),
                 url: element.getAttribute("data-url"),
             }
-            if (brewArray === null) {
+            if (brewArray.length == 0|| !brewArray || brewArray[0] == null) {
                 brewArray = [newEntry];
             } else {
                 for (i = 0; i < brewArray.length; i++) {
@@ -212,6 +224,9 @@ if (removeEl != null) {
     removeEl.addEventListener("click", function (event) {
         const element = event.target;
         if (element.matches(".rembox")) {
+            const likedButton = element.previousElementSibling;
+            likedButton.classList.remove("liked");
+            likedButton.innerHTML = "Like";
             //parse string associated with favorite box
             const newEntry = element.getAttribute("data-name")
 
@@ -226,6 +241,16 @@ if (removeEl != null) {
                 dislikeArray.unshift(newEntry);
             }
             localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
+
+            for(i=0; i<brewArray.length; i++){
+                for(j=0; j<dislikeArray.length; j++){
+                    if(brewArray[i].name == dislikeArray[j]){
+                        delete brewArray[i];
+                        console.log("we have a problem")
+                        localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+                    }
+                }
+            }
 
         }
     });
