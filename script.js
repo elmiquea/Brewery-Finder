@@ -76,6 +76,8 @@ function getBreweryZip(breweryType, zip) {
         })
 }
 
+
+
 function buildBreweryCards(brewery) {
     console.log(brewery);
     cardSection.innerHTML = "";
@@ -128,7 +130,6 @@ function buildBreweryCards(brewery) {
         const cardFooter = document.createElement("footer");
         cardFooter.classList.add("card-footer");
         cardDiv.appendChild(cardFooter);
-        //This is where I create the like button for each brewery
         const likeButton = document.createElement("a");
         likeButton.classList.add("card-footer-item", "favebox");
         likeButton.setAttribute("data-name", breweryName);
@@ -159,7 +160,7 @@ if (likeEl != null) {
                         return;
                     }
                 }
-                brewArray.push(newEntry);
+                brewArray.unshift(newEntry);
             }
             localStorage.setItem("BrewArray", JSON.stringify(brewArray));
 
