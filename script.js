@@ -157,10 +157,10 @@ function buildBreweryCards(brewery) {
             likeButton.textContent = "Like";
             const buttonName = likeButton.getAttribute("data-name");
             cardFooter.appendChild(likeButton);
-            for(j=0; j<brewArray.length; j++){
-            if(brewArray.length == 0|| !brewArray || brewArray[0] == null){
+            if(!brewArray || brewArray[0] == null){
     
             } else {
+            for(j=0; j<brewArray.length; j++){
                 if(brewArray[j].name == buttonName) {
                 likeButton.classList.add("liked");
                 likeButton.textContent = "Liked";
@@ -190,7 +190,7 @@ if (likeEl != null) {
                 phone: element.getAttribute("data-phone"),
                 url: element.getAttribute("data-url"),
             }
-            if (brewArray.length == 0|| !brewArray || brewArray[0] == null) {
+            if (!brewArray || brewArray[0] == null) {
                 brewArray = [newEntry];
             } else {
                 for (i = 0; i < brewArray.length; i++) {
@@ -241,18 +241,24 @@ if (removeEl != null) {
                 dislikeArray.unshift(newEntry);
             }
             localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
+            if(!brewArray || brewArray == null || brewArray.length == 0){
 
+            } else {
             for(i=0; i<brewArray.length; i++){
                 for(j=0; j<dislikeArray.length; j++){
+                    if(!brewArray || brewArray == null || brewArray.length == 0){
+                    } else{
                     if(brewArray[i].name == dislikeArray[j]){
-                        delete brewArray[i];
+                        brewArray.splice(i, 1);
                         console.log("we have a problem")
-                        localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+                        
+                    }
                     }
                 }
             }
+            localStorage.setItem("BrewArray", JSON.stringify(brewArray));
 
-        }
+        }}
     });
 }
 

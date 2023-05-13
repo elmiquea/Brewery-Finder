@@ -4,7 +4,7 @@ const removeEl = document.querySelector(".remove");
 function displayFave() {
     brewArray = JSON.parse(localStorage.getItem("BrewArray"));
     console.log(brewArray);
-    if (brewArray.length == 0 || !brewArray || brewArray[0] == null) {
+    if (brewArray.length == 0 ||!brewArray || brewArray == null) {
         const faveBrewElE = document.getElementById("fave-brew");
         console.log("I'm empty")
         const columnDivE = document.createElement("div");
