@@ -25,3 +25,7 @@ h1 {
 #empty {
     height: 40px;
 }
+
+#clear-dislikes {
+    float: right;
+}
