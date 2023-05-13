@@ -2,7 +2,24 @@ let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 const removeEl = document.querySelector(".remove");
 
 function displayFave() {
-    if (brewArray != null) {
+    brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+    if (brewArray.length == 0) {
+        const faveBrewElE = document.getElementById("fave-brew");
+        console.log("I'm empty")
+        const columnDivE = document.createElement("div");
+        columnDivE.classList.add("column", "is-11");
+        faveBrewElE.appendChild(columnDivE);
+        const cardDivE = document.createElement("div");
+        cardDivE.classList.add("card");
+        columnDivE.appendChild(cardDivE);
+        const cardHeaderE = document.createElement("header");
+        cardHeaderE.classList.add("card-header");
+        cardDivE.appendChild(cardHeaderE);
+        const cardHeaderTitleE = document.createElement("p");
+        cardHeaderTitleE.classList.add("card-header-title", "is-centered");
+        cardHeaderTitleE.textContent = "You Have No Liked Breweries";
+        cardHeaderE.appendChild(cardHeaderTitleE);
+    } else {
         brewArray = JSON.parse(localStorage.getItem("BrewArray"));
         const faveBrewEl = document.getElementById("fave-brew");
 
@@ -27,14 +44,26 @@ function displayFave() {
             cardContent.classList.add("content");
             cardMain.appendChild(cardContent);
             const address = document.createElement("h3");
-            address.textContent = brewArray[i].address;
+            if (brewArray[i].address == "null") {
+                address.textContent = "No Address Available";
+            } else {
+                address.textContent = brewArray[i].address;
+            }
             cardContent.appendChild(address);
             const phone = document.createElement("h4");
-            phone.textContent = brewArray[i].phone;
+            if (brewArray[i].phone == "null") {
+                phone.textContent = "No Phone Number Available";
+            } else {
+                phone.textContent = "Phone Number: " + brewArray[i].phone;
+            }
             cardContent.appendChild(phone);
             const websiteLink = document.createElement("a");
-            websiteLink.href = brewArray[i].url;
-            websiteLink.textContent = brewArray[i].url;
+            if (brewArray[i].url == "null") {
+                websiteLink.textContent = "No Website Available";
+            } else {
+                websiteLink.href = brewArray[i].url;
+                websiteLink.textContent = brewArray[i].url;
+            }
             cardContent.appendChild(websiteLink);
             const cardFooter = document.createElement("footer");
             cardFooter.classList.add("card-footer");
