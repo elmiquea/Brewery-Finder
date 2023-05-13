@@ -247,10 +247,10 @@ if (removeEl != null) {
             for(i=0; i<brewArray.length; i++){
                 for(j=0; j<dislikeArray.length; j++){
                     if(!brewArray || brewArray == null || brewArray.length == 0){
-                    } else{
-                    if(brewArray[i].name == dislikeArray[j]){
-                        brewArray.splice(i, 1);
-                        console.log("we have a problem")
+                    } else {
+                        if(brewArray[i].name == dislikeArray[j]){
+                            brewArray.splice(i, 1);
+                            console.log("we have a problem")
                         
                     }
                     }
