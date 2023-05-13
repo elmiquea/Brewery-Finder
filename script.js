@@ -3,11 +3,14 @@ const searchButtonZip = document.getElementById('search-button-zip');
 const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
+const clearDislikeEl = document.getElementById("clear-dislikes");
 const seeFaveBrewEl = document.getElementById('see-fave-brews')
-let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 const cardSection = document.getElementById("card-section");
+let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+let dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
+const removeEl = document.querySelector(".rembox");
 const likeEl = document.querySelector(".favebox");
-
+let disliked;
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
@@ -48,7 +51,15 @@ function fetchGeo(API, dropdownIPVal) {
 };
 
 function getBreweryIp(breweryType, lat, lon) {
-    const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_dist=" + lat + "," + lon + "&per_page=5&by_type=" + breweryType;
+    let extraSearch;
+    if (dislikeArray === null) {
+        extraSearch = 0;
+    } else {
+        extraSearch = dislikeArray.length;
+    }
+    
+    const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_dist=" + lat +
+         "," + lon + "&per_page=" + (5 + extraSearch) + "&by_type=" + breweryType;
 
     fetch(fetchUrl)
         .then(function (response) {
@@ -83,6 +94,7 @@ function buildBreweryCards(brewery) {
     brewArray = JSON.parse(localStorage.getItem("BrewArray"));
     console.log(brewArray);
     cardSection.innerHTML = "";
+    let cards = 0;
     for (let i = 0; i < brewery.length; i++) {
         const breweryName = brewery[i].name;
         const breweryPhone = brewery[i].phone;
@@ -92,65 +104,66 @@ function buildBreweryCards(brewery) {
         const breweryWebsite = brewery[i].website_url;
         const breweryAddress = breweryStreet + ", " + breweryCity + ", " + breweryState;
         const columnDiv = document.createElement("div");
-        columnDiv.classList.add("column", "is-11");
-        cardSection.appendChild(columnDiv);
-        const cardDiv = document.createElement("div");
-        cardDiv.classList.add("card");
-        columnDiv.appendChild(cardDiv);
-        const cardHeader = document.createElement("header");
-        cardHeader.classList.add("card-header");
-        cardDiv.appendChild(cardHeader);
-        const cardHeaderTitle = document.createElement("p");
-        cardHeaderTitle.classList.add("card-header-title", "is-centered");
-        cardHeaderTitle.textContent = breweryName;
-        cardHeader.appendChild(cardHeaderTitle);
-        const cardMain = document.createElement("div");
-        cardMain.classList.add("card-content");
-        cardDiv.appendChild(cardMain);
-        const cardContent = document.createElement("div");
-        cardContent.classList.add("content");
-        cardMain.appendChild(cardContent);
-        const address = document.createElement("h3");
-        address.textContent = breweryStreet + ", " + breweryCity + ", " + breweryState;
-        cardContent.appendChild(address);
-        const phone = document.createElement("h4");
-        if (!breweryPhone) {
-            phone.textContent = "No Phone Number Available"
-        } else {
-            phone.textContent = "Phone Number: " + breweryPhone;
-        }
-        console.log(breweryPhone);
-        cardContent.appendChild(phone);
-        const websiteLink = document.createElement("a");
-        if (!breweryWebsite) {
-            websiteLink.textContent = "No Website Available"
-        } else {
-            websiteLink.href = breweryWebsite;
-            websiteLink.textContent = breweryWebsite;
-        }
-        cardContent.appendChild(websiteLink);
-        const cardFooter = document.createElement("footer");
-        cardFooter.classList.add("card-footer");
-        cardDiv.appendChild(cardFooter);
-        const likeButton = document.createElement("a");
-        likeButton.classList.add("card-footer-item", "favebox");
-        likeButton.setAttribute("data-name", breweryName);
-        likeButton.setAttribute("data-address", breweryAddress);
-        likeButton.setAttribute("data-phone", breweryPhone);
-        likeButton.setAttribute("data-url", breweryWebsite);
-        likeButton.textContent = "Like";
-        const buttonName = likeButton.getAttribute("data-name");
-        cardFooter.appendChild(likeButton);
-        for(j=0; j<brewArray.length; j++){
-        if(brewArray.length == 0){
 
-        } else {
-            if(brewArray[j].name == buttonName) {
-            likeButton.classList.add("liked");
-            likeButton.textContent = "Liked";
+        checkDislikes(brewery[i].name);
+
+        if (!disliked && cards < 5) {
+            columnDiv.classList.add("column", "is-11");
+            cardSection.appendChild(columnDiv);
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+            columnDiv.appendChild(cardDiv);
+            const cardHeader = document.createElement("header");
+            cardHeader.classList.add("card-header");
+            cardDiv.appendChild(cardHeader);
+            const cardHeaderTitle = document.createElement("p");
+            cardHeaderTitle.classList.add("card-header-title", "is-centered");
+            cardHeaderTitle.textContent = breweryName;
+            cardHeader.appendChild(cardHeaderTitle);
+            const cardMain = document.createElement("div");
+            cardMain.classList.add("card-content");
+            cardDiv.appendChild(cardMain);
+            const cardContent = document.createElement("div");
+            cardContent.classList.add("content");
+            cardMain.appendChild(cardContent);
+            const address = document.createElement("h3");
+            address.textContent = breweryStreet + ", " + breweryCity + ", " + breweryState;
+            cardContent.appendChild(address);
+            const phone = document.createElement("h4");
+            if (!breweryPhone) {
+                phone.textContent = "No Phone Number Available"
+            } else {
+                phone.textContent = "Phone Number: " + breweryPhone;
             }
-        }}
-        
+            console.log(breweryPhone);
+            cardContent.appendChild(phone);
+            const websiteLink = document.createElement("a");
+            if (!breweryWebsite) {
+                websiteLink.textContent = "No Website Available"
+            } else {
+                websiteLink.href = breweryWebsite;
+                websiteLink.textContent = breweryWebsite;
+            }
+            cardContent.appendChild(websiteLink);
+            const cardFooter = document.createElement("footer");
+            cardFooter.classList.add("card-footer");
+            cardDiv.appendChild(cardFooter);
+            const likeButton = document.createElement("a");
+            likeButton.classList.add("card-footer-item", "favebox");
+            likeButton.setAttribute("data-name", breweryName);
+            likeButton.setAttribute("data-address", breweryAddress);
+            likeButton.setAttribute("data-phone", breweryPhone);
+            likeButton.setAttribute("data-url", breweryWebsite);
+            likeButton.textContent = "Like";
+            cardFooter.appendChild(likeButton);
+
+            const dislikeButton = document.createElement("a");
+            dislikeButton.classList.add("card-footer-item", "rembox");
+            dislikeButton.setAttribute("data-name", breweryName);
+            dislikeButton.textContent = "Dislike";
+            cardFooter.appendChild(dislikeButton);
+            cards++;
+        } 
     };
 }
 
@@ -181,3 +194,52 @@ if (likeEl != null) {
     });
 }
 
+function checkDislikes(brewName) {
+    //const dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
+    if (dislikeArray != null) {
+        for (let i = 0; i < dislikeArray.length; i++) {
+            if (dislikeArray[i] == brewName) {
+                disliked = true;
+                return disliked;
+            } else {
+                disliked = false;
+            }
+        }
+    }
+}
+
+if (removeEl != null) {
+    removeEl.addEventListener("click", function (event) {
+        const element = event.target;
+        if (element.matches(".rembox")) {
+            //parse string associated with favorite box
+            const newEntry = element.getAttribute("data-name")
+
+            if (dislikeArray === null) {
+                dislikeArray = [newEntry];
+            } else {
+                for (i = 0; i < dislikeArray.length; i++) {
+                    if (dislikeArray[i] == newEntry) {
+                        return;
+                    }
+                }
+                dislikeArray.unshift(newEntry);
+            }
+            localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
+
+        }
+    });
+}
+
+if (clearDislikeEl != null) {
+    clearDislikeEl.addEventListener("click", function (event) {
+        const element = event.target;
+        const len = dislikeArray.length
+        if (element.matches("#clear-dislikes")) {
+            for (let i = len; i > 0; i--) {
+                dislikeArray.pop();
+            }
+        } 
+        localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
+    });
+}

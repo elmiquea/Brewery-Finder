@@ -29,3 +29,7 @@ h1 {
 .liked {
     background-color: greenyellow;
 }
+
+#clear-dislikes {
+    float: right;
+}
