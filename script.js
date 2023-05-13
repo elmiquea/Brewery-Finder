@@ -80,6 +80,8 @@ function getBreweryZip(breweryType, zip) {
 
 function buildBreweryCards(brewery) {
     console.log(brewery);
+    brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+    console.log(brewArray);
     cardSection.innerHTML = "";
     for (let i = 0; i < brewery.length; i++) {
         const breweryName = brewery[i].name;
@@ -137,7 +139,18 @@ function buildBreweryCards(brewery) {
         likeButton.setAttribute("data-phone", breweryPhone);
         likeButton.setAttribute("data-url", breweryWebsite);
         likeButton.textContent = "Like";
+        const buttonName = likeButton.getAttribute("data-name");
         cardFooter.appendChild(likeButton);
+        for(j=0; j<brewArray.length; j++){
+        if(brewArray.length == 0){
+
+        } else {
+            if(brewArray[j].name == buttonName) {
+            likeButton.classList.add("liked");
+            likeButton.textContent = "Liked";
+            }
+        }}
+        
     };
 }
 
