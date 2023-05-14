@@ -160,7 +160,7 @@ function buildBreweryCards(brewery) {
             if(!brewArray || brewArray[0] == null){
     
             } else {
-            for(j=0; j<brewArray.length; j++){
+            for(let j=0; j<brewArray.length; j++){
                 if(brewArray[j].name == buttonName) {
                 likeButton.classList.add("liked");
                 likeButton.textContent = "Liked";
@@ -193,7 +193,7 @@ if (likeEl != null) {
             if (!brewArray || brewArray[0] == null) {
                 brewArray = [newEntry];
             } else {
-                for (i = 0; i < brewArray.length; i++) {
+                for (let i = 0; i < brewArray.length; i++) {
                     if (brewArray[i].name == newEntry.name) {
                         return;
                     }
@@ -233,7 +233,7 @@ if (removeEl != null) {
             if (dislikeArray === null) {
                 dislikeArray = [newEntry];
             } else {
-                for (i = 0; i < dislikeArray.length; i++) {
+                for (let i = 0; i < dislikeArray.length; i++) {
                     if (dislikeArray[i] == newEntry) {
                         return;
                     }
@@ -244,8 +244,8 @@ if (removeEl != null) {
             if(!brewArray || brewArray == null || brewArray.length == 0){
 
             } else {
-            for(i=0; i<brewArray.length; i++){
-                for(j=0; j<dislikeArray.length; j++){
+            for(let i=0; i<brewArray.length; i++){
+                for(let j=0; j<dislikeArray.length; j++){
                     if(!brewArray || brewArray == null || brewArray.length == 0){
                     } else {
                         if(brewArray[i].name == dislikeArray[j]){
