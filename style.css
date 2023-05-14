@@ -26,6 +26,10 @@ h1 {
     height: 40px;
 }
 
+.liked {
+    background-color: greenyellow;
+}
+
 #clear-dislikes {
     float: right;
 }
