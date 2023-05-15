@@ -47,13 +47,8 @@ function fetchGeo(API, dropdownIPVal) {
             const lon = data.location.longitude;
             console.log(lon);
             getBreweryIp(dropdownIPVal, lat, lon);
-            const myElement = document.getElementById('my-element');
-            myElement.style.color = 'red';
-            myElement.style.backgroundColor = 'blue';
-          });
+        });
       }
-    
-
 
 function getBreweryIp(breweryType, lat, lon) {
     let extraSearch;
@@ -279,8 +274,8 @@ if (clearDislikeEl != null) {
         localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
     });
 }
-<<<<<<< Updated upstream
-=======
+
+
 document.getElementById("dropdown-name").addEventListener("change", function() {
     var input = document.getElementById("search-brewery");
     var select = document.getElementById("dropdown-name");
@@ -290,18 +285,21 @@ document.getElementById("dropdown-name").addEventListener("change", function() {
       input.placeholder = "Brewery Name";
     }
   });
-   
-  document.addEventListener('DOMContentLoaded', () => {
-    const dropdown = document.querySelector('.dropdown');
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    const dropdownToggle = document.querySelector('.dropdown-toggle');
-    const dropdownIcon = document.querySelector('.dropdown-icon');
+  const form = document.getElementById('search-form-name');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    fetch('"https://api.openbrewerydb.org/v1/breweries?by_name=" + zip + "&per_page=5&by_name=" + breweryName;', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
+  
 
-    dropdown.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('is-active');
-        dropdownToggle.classList.toggle('is-active');
-        dropdownIcon.classList.toggle('fa-angle-up');
-        dropdownIcon.classList.toggle('fa-angle-down');
-    });
-});
->>>>>>> Stashed changes

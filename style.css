@@ -38,7 +38,7 @@ header h1 {
 #empty {
     height: 40px;
 }
-<<<<<<< Updated upstream
+
 
 .liked {
     background-color: greenyellow;
@@ -47,7 +47,7 @@ header h1 {
 #clear-dislikes {
     float: right;
 }
-=======
+
 input[type="text"] {
     width: 200px;
     height: 40px;
@@ -99,5 +99,3 @@ input[type="text"] {
     display: block; /* Display the menu as a block element */
   }
   
- 
->>>>>>> Stashed changes
