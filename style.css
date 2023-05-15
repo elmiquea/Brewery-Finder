@@ -2,16 +2,29 @@ html,
 body {
     background-image: url(./assets/Wood-Light.jpg);
     min-height: 100vh;
+   
+      
 }
 
-h1 {
-    font-size: 80px;
-    color: yellow;
-}
+header h1 {
+    
+        font-size: 80px;
+        font-weight: 600;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: yellow;
+       text-decoration: solid;
+       text-transform: uppercase;
+       text-shadow: 1px 4px 0px black;
+        background-color: brown;
+      }
+      
+      
 
 .link {
     text-decoration: none;
     color: yellow;
+    font-size: 20px;
+
 }
 
 #footer {
@@ -25,6 +38,7 @@ h1 {
 #empty {
     height: 40px;
 }
+<<<<<<< Updated upstream
 
 .liked {
     background-color: greenyellow;
@@ -33,3 +47,57 @@ h1 {
 #clear-dislikes {
     float: right;
 }
+=======
+input[type="text"] {
+    width: 200px;
+    height: 40px;
+    border: 1px solid black;
+  }
+  /* Style the button */
+.btn {
+    background-color: var(--color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  
+  /* Style the dropdown menu */
+  .dropdown {
+    display: none; /* Hide the menu by default */
+    position: absolute; /* Position it relative to the button */
+    top: calc(100% + var(--gap)); /* Place it below the button with some gap */
+    left: 0; /* Align it to the left of the button */
+    min-width: 200px; /* Set a minimum width for the menu */
+    background-color: white; /* Set a white background for the menu */
+    box-shadow: var(--shadow); /* Add some shadow effect for the menu */
+    border-radius: var(--radius); /* Add some rounded corners for the menu */
+  }
+  
+  /* Style the dropdown items */
+  .dropdown a {
+    display: block; /* Make each item fill the entire width of the menu */
+    padding: 0.5rem 1rem; /* Add some padding for each item */
+    color: black; /* Set a black text color for each item */
+    text-decoration: none; /* Remove any underline for each item */
+  }
+  
+  /* Style the dropdown icons */
+  .dropdown i {
+    margin-right: var(--gap); /* Add some space between the icon and the text */
+  }
+  
+  /* Style the dropdown items on hover */
+  .dropdown a:hover {
+    background-color: var(--color); /* Change the background color to match the button */
+    color: white; /* Change the text color to white */
+  }
+  
+  /* Show the dropdown menu when the button is clicked (using JavaScript) */
+  .is-active {
+    display: block; /* Display the menu as a block element */
+  }
+  
+ 
+>>>>>>> Stashed changes

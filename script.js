@@ -47,8 +47,13 @@ function fetchGeo(API, dropdownIPVal) {
             const lon = data.location.longitude;
             console.log(lon);
             getBreweryIp(dropdownIPVal, lat, lon);
-        })
-};
+            const myElement = document.getElementById('my-element');
+            myElement.style.color = 'red';
+            myElement.style.backgroundColor = 'blue';
+          });
+      }
+    
+
 
 function getBreweryIp(breweryType, lat, lon) {
     let extraSearch;
@@ -274,3 +279,29 @@ if (clearDislikeEl != null) {
         localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
     });
 }
+<<<<<<< Updated upstream
+=======
+document.getElementById("dropdown-name").addEventListener("change", function() {
+    var input = document.getElementById("search-brewery");
+    var select = document.getElementById("dropdown-name");
+    if (select.value === "brewpub") {
+      input.placeholder = "Brewpub Name";
+    } else {
+      input.placeholder = "Brewery Name";
+    }
+  });
+   
+  document.addEventListener('DOMContentLoaded', () => {
+    const dropdown = document.querySelector('.dropdown');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownIcon = document.querySelector('.dropdown-icon');
+
+    dropdown.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('is-active');
+        dropdownToggle.classList.toggle('is-active');
+        dropdownIcon.classList.toggle('fa-angle-up');
+        dropdownIcon.classList.toggle('fa-angle-down');
+    });
+});
+>>>>>>> Stashed changes
