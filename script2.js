@@ -7,7 +7,7 @@ const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 function displayFave() {
     // brewArray = JSON.parse(localStorage.getItem("BrewArray"));
     console.log(brewArray);
-    if ( !brewArray || brewArray == null || brewArray.length == 0) {
+    if (!brewArray || brewArray == null || brewArray.length == 0) {
         const faveBrewElE = document.getElementById("fave-brew");
         console.log("I'm empty")
         const columnDivE = document.createElement("div");
@@ -126,30 +126,32 @@ function fetchGeo() {
 };
 
 async function initMap(lat, lon) {
-  const { Map } = await google.maps.importLibrary("maps");
-  const myPos = { lat: lat, lng: lon };
-  map = new Map(document.getElementById("map"), {
-    center: myPos,
-    zoom: 10,
-  });
-
-  new google.maps.Marker({
-    position: myPos,
-    map: map,
-    title: "You are Here.",
-  });
-
-  for (let i = 0; i < brewArray.length; i++) {
-    console.log (parseFloat(brewArray[i].lat));
-    const brewPos = { lat: parseFloat(brewArray[i].lat), 
-        lng: parseFloat(brewArray[i].lon) };
-    new google.maps.Marker({
-        position: brewPos,
-        map: map,
-        title: brewArray[i].name,
-        icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+    const { Map } = await google.maps.importLibrary("maps");
+    const myPos = { lat: lat, lng: lon };
+    map = new Map(document.getElementById("map"), {
+        center: myPos,
+        zoom: 10,
     });
-  }
+
+    new google.maps.Marker({
+        position: myPos,
+        map: map,
+        title: "You are Here.",
+    });
+
+    for (let i = 0; i < brewArray.length; i++) {
+        console.log(parseFloat(brewArray[i].lat));
+        const brewPos = {
+            lat: parseFloat(brewArray[i].lat),
+            lng: parseFloat(brewArray[i].lon)
+        };
+        new google.maps.Marker({
+            position: brewPos,
+            map: map,
+            title: brewArray[i].name,
+            icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+        });
+    }
 }
 
 fetchGeo();
