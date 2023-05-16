@@ -151,9 +151,6 @@ async function initMap(lat, lon) {
         };
 
         const marker = new google.maps.Marker({
-
-        new google.maps.Marker({
-
             position: brewPos,
             map: map,
             title: brewArray[i].name,
@@ -170,7 +167,7 @@ function clearMarkers() {
         for (let i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
-        markers = [];       
+        markers = [];
     }
 }
 
