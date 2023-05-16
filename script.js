@@ -13,7 +13,7 @@ const likeEl = document.querySelector(".favebox");
 let disliked;
 let markers = [];
 
-const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
+const geoAPIKey = 'a2854aef178b7d71349a4aaa2af43d1d547f3295';
 
 if (searchButtonZip != null) {
     searchButtonZip.addEventListener("click", function () {
