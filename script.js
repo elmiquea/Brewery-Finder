@@ -70,6 +70,7 @@ function getBreweryIp(breweryType, lat, lon) {
         .then(function (data) {
             console.log(data);
             buildBreweryCards(data);
+            initMap(data, lat, lon);
         })
 }
 
@@ -283,3 +284,28 @@ if (clearDislikeEl != null) {
     });
 }
 
+async function initMap(brewery, lat, lon) {
+    const { Map } = await google.maps.importLibrary("maps");
+    const myPos = { lat: lat, lng: lon };
+    map = new Map(document.getElementById("map"), {
+      center: myPos,
+      zoom: 10,
+    });
+  
+    new google.maps.Marker({
+      position: myPos,
+      map: map,
+      title: "You are Here.",
+    });
+  
+    for (let i = 0; i < brewery.length; i++) {
+        const brewPos = { lat: parseFloat(brewery[i].latitude), 
+          lng: parseFloat(brewery[i].longitude) };
+      new google.maps.Marker({
+          position: brewPos,
+          map: map,
+          title: brewery[i].name,
+          icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+      });
+    }
+  }

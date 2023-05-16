@@ -41,6 +41,7 @@ h2 {
     color: yellow;
 }
 
+
 .none {
     display: none;
 }
@@ -70,4 +71,10 @@ h2 {
 
 .card {
     background-image: linear-gradient(to bottom right, rgba(255, 255, 0, 0.75), rgba(250, 154, 0, 0.69));
+}
+
+#map {
+    height: 400px;
+    width: 80%;
+    margin: 5% 10%;
 }
