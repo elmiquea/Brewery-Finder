@@ -11,6 +11,7 @@ let dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
 const removeEl = document.querySelector(".rembox");
 const likeEl = document.querySelector(".favebox");
 let disliked;
+let markers = [];
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
@@ -300,11 +301,44 @@ async function initMap(brewery, lat, lon) {
         title: "You are Here.",
     });
 
+
+    clearMarkers();
+
+    let pins = 0;
+
+
     for (let i = 0; i < brewery.length; i++) {
         const brewPos = {
             lat: parseFloat(brewery[i].latitude),
             lng: parseFloat(brewery[i].longitude)
         };
+
+
+        checkDislikes(brewery[i].name);
+
+        if (!disliked && pins < 5) {
+            const marker = new google.maps.Marker({
+                position: brewPos,
+                map: map,
+                title: brewery[i].name,
+                icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+            });
+            markers.push(marker);
+            pins++;
+        }
+    }
+}
+
+function clearMarkers() {
+    if (markers != []) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];       
+    }
+}
+
+
         new google.maps.Marker({
             position: brewPos,
             map: map,
@@ -313,3 +347,4 @@ async function initMap(brewery, lat, lon) {
         });
     }
 }
+

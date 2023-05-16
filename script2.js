@@ -1,11 +1,12 @@
 let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 const removeEl = document.querySelector(".remove");
 let map;
+let markers = [];
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
 function displayFave() {
-    // brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+    brewArray = JSON.parse(localStorage.getItem("BrewArray"));
     console.log(brewArray);
     if (!brewArray || brewArray == null || brewArray.length == 0) {
         const faveBrewElE = document.getElementById("fave-brew");
@@ -24,7 +25,7 @@ function displayFave() {
         cardHeaderTitleE.textContent = "You Have No Liked Breweries";
         cardHeaderE.appendChild(cardHeaderTitleE);
     } else {
-        // brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+        brewArray = JSON.parse(localStorage.getItem("BrewArray"));
         const faveBrewEl = document.getElementById("fave-brew");
 
         for (let i = 0; i < brewArray.length; i++) {
@@ -77,6 +78,7 @@ function displayFave() {
             removeButton.setAttribute("data-name", brewArray[i].name);
             removeButton.textContent = "Remove";
             cardFooter.appendChild(removeButton)
+
         }
     }
 }
@@ -97,6 +99,8 @@ if (removeEl != null) {
 
             localStorage.setItem("BrewArray", JSON.stringify(removeArray));
             removeCards();
+            clearMarkers();
+            fetchGeo();
             displayFave();
         }
     });
@@ -145,13 +149,30 @@ async function initMap(lat, lon) {
             lat: parseFloat(brewArray[i].lat),
             lng: parseFloat(brewArray[i].lon)
         };
+
+        const marker = new google.maps.Marker({
+
         new google.maps.Marker({
+
             position: brewPos,
             map: map,
             title: brewArray[i].name,
             icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
         });
+
+        markers.push(marker);
+
     }
 }
+
+function clearMarkers() {
+    if (markers != []) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];       
+    }
+}
+
 
 fetchGeo();
