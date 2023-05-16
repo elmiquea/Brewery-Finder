@@ -334,17 +334,7 @@ function clearMarkers() {
         for (let i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
-        markers = [];       
-    }
-}
-
-
-        new google.maps.Marker({
-            position: brewPos,
-            map: map,
-            title: brewery[i].name,
-            icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
-        });
+        markers = [];
     }
 }
 
