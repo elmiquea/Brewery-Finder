@@ -35,6 +35,7 @@ h1 {
     float: right;
 }
 
+
 .none {
     display: none;
 }
@@ -64,4 +65,10 @@ h1 {
 
 .card {
     background-image: linear-gradient(to bottom right, rgba(250, 154, 0, 0.69), rgba(255, 255, 0, 0.75));
+}
+
+#map {
+    height: 400px;
+    width: 80%;
+    margin: 5% 10%;
 }
