@@ -55,7 +55,7 @@ function displayFave() {
             if (brewArray[i].phone == "null") {
                 phone.textContent = "No Phone Number Available";
             } else {
-                phone.textContent = "Phone Number: " + brewArray[i].phone;
+                phone.textContent = "Phone Number: " + brewArray[i].phone.slice(0, 3) + "-" + brewArray[i].phone.slice(3, 6) + "-" + brewArray[i].phone.slice(6, 10);
             }
             cardContent.appendChild(phone);
             const websiteLink = document.createElement("a");
