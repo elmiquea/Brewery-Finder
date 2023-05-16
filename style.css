@@ -1,6 +1,7 @@
 html,
 body {
     background-image: url(./assets/Wood-Light.jpg);
+    position: relative;
     min-height: 100vh;
 }
 
@@ -15,7 +16,7 @@ h1 {
 }
 
 #footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
     margin-bottom: 10px;
@@ -55,7 +56,8 @@ h1 {
 
 #see-fave-brews:hover,
 #clear-dislikes:hover,
-.github:hover {
+.github:hover,
+#back:hover {
     box-shadow: inset 0px 0px 5px yellow, 0 0 15px yellow;
     transition: all 0.5s ease-in-out;
 }

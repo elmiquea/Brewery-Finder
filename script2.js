@@ -4,7 +4,7 @@ const removeEl = document.querySelector(".remove");
 function displayFave() {
     brewArray = JSON.parse(localStorage.getItem("BrewArray"));
     console.log(brewArray);
-    if (brewArray.length == 0 ||!brewArray || brewArray == null) {
+    if ( !brewArray || brewArray == null || brewArray.length == 0) {
         const faveBrewElE = document.getElementById("fave-brew");
         console.log("I'm empty")
         const columnDivE = document.createElement("div");
@@ -52,7 +52,7 @@ function displayFave() {
             }
             cardContent.appendChild(address);
             const phone = document.createElement("h4");
-            if (brewArray[i].phone == "null") {
+            if (!brewArray[i].phone) {
                 phone.textContent = "No Phone Number Available";
             } else {
                 phone.textContent = "Phone Number: " + brewArray[i].phone.slice(0, 3) + "-" + brewArray[i].phone.slice(3, 6) + "-" + brewArray[i].phone.slice(6, 10);

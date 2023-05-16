@@ -184,7 +184,7 @@ if (likeEl != null) {
     likeEl.addEventListener("click", function (event) {
         const element = event.target;
         console.log(element);
-        if (element.matches(".favebox")) {
+        if (element.matches(".favebox") && !element.matches("#card-section")) {
             element.classList.add("liked");
             element.textContent = "Liked";
             //parse string associated with favorite box
@@ -229,7 +229,7 @@ function checkDislikes(brewName) {
 if (removeEl != null) {
     removeEl.addEventListener("click", function (event) {
         const element = event.target;
-        if (element.matches(".rembox")) {
+        if (element.matches(".rembox")&& !element.matches("#card-section")) {
             console.log(element);
             element.parentElement.parentElement.parentElement.classList.add("none");
             const likedButton = element.previousElementSibling;
