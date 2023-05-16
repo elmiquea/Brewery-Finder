@@ -171,5 +171,4 @@ function clearMarkers() {
     }
 }
 
-
 fetchGeo();
