@@ -11,6 +11,7 @@ let dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
 const removeEl = document.querySelector(".rembox");
 const likeEl = document.querySelector(".favebox");
 let disliked;
+let markers = [];
 
 const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
@@ -57,9 +58,9 @@ function getBreweryIp(breweryType, lat, lon) {
     } else {
         extraSearch = dislikeArray.length;
     }
-    
+
     const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_dist=" + lat +
-         "," + lon + "&per_page=" + (5 + extraSearch) + "&by_type=" + breweryType;
+        "," + lon + "&per_page=" + (5 + extraSearch) + "&by_type=" + breweryType;
 
     fetch(fetchUrl)
         .then(function (response) {
@@ -162,22 +163,23 @@ function buildBreweryCards(brewery) {
             likeButton.textContent = "Like";
             const buttonName = likeButton.getAttribute("data-name");
             cardFooter.appendChild(likeButton);
-            if(!brewArray || brewArray[0] == null){
-    
+            if (!brewArray || brewArray[0] == null) {
+
             } else {
-            for(let j=0; j<brewArray.length; j++){
-                if(brewArray[j].name == buttonName) {
-                likeButton.classList.add("liked");
-                likeButton.textContent = "Liked";
+                for (let j = 0; j < brewArray.length; j++) {
+                    if (brewArray[j].name == buttonName) {
+                        likeButton.classList.add("liked");
+                        likeButton.textContent = "Liked";
+                    }
                 }
-            }}
+            }
             const dislikeButton = document.createElement("a");
             dislikeButton.classList.add("card-footer-item", "rembox");
             dislikeButton.setAttribute("data-name", breweryName);
             dislikeButton.textContent = "Dislike";
             cardFooter.appendChild(dislikeButton);
             cards++;
-        } 
+        }
     };
 }
 
@@ -230,7 +232,7 @@ function checkDislikes(brewName) {
 if (removeEl != null) {
     removeEl.addEventListener("click", function (event) {
         const element = event.target;
-        if (element.matches(".rembox")&& !element.matches("#card-section")) {
+        if (element.matches(".rembox") && !element.matches("#card-section")) {
             console.log(element);
             element.parentElement.parentElement.parentElement.classList.add("none");
             const likedButton = element.previousElementSibling;
@@ -250,24 +252,25 @@ if (removeEl != null) {
                 dislikeArray.unshift(newEntry);
             }
             localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
-            if(!brewArray || brewArray == null || brewArray.length == 0){
+            if (!brewArray || brewArray == null || brewArray.length == 0) {
 
             } else {
-            for(let i=0; i<brewArray.length; i++){
-                for(let j=0; j<dislikeArray.length; j++){
-                    if(!brewArray || brewArray == null || brewArray.length == 0){
-                    } else {
-                        if(brewArray[i].name == dislikeArray[j]){
-                            brewArray.splice(i, 1);
-                            console.log("we have a problem")
-                        
-                    }
+                for (let i = 0; i < brewArray.length; i++) {
+                    for (let j = 0; j < dislikeArray.length; j++) {
+                        if (!brewArray || brewArray == null || brewArray.length == 0) {
+                        } else {
+                            if (brewArray[i].name == dislikeArray[j]) {
+                                brewArray.splice(i, 1);
+                                console.log("we have a problem")
+
+                            }
+                        }
                     }
                 }
-            }
-            localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+                localStorage.setItem("BrewArray", JSON.stringify(brewArray));
 
-        }}
+            }
+        }
     });
 }
 
@@ -279,7 +282,7 @@ if (clearDislikeEl != null) {
             for (let i = len; i > 0; i--) {
                 dislikeArray.pop();
             }
-        } 
+        }
         localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
     });
 }
@@ -288,24 +291,46 @@ async function initMap(brewery, lat, lon) {
     const { Map } = await google.maps.importLibrary("maps");
     const myPos = { lat: lat, lng: lon };
     map = new Map(document.getElementById("map"), {
-      center: myPos,
-      zoom: 10,
+        center: myPos,
+        zoom: 10,
     });
-  
+
     new google.maps.Marker({
-      position: myPos,
-      map: map,
-      title: "You are Here.",
+        position: myPos,
+        map: map,
+        title: "You are Here.",
     });
-  
+
+    clearMarkers();
+
+    let pins = 0;
     for (let i = 0; i < brewery.length; i++) {
-        const brewPos = { lat: parseFloat(brewery[i].latitude), 
-          lng: parseFloat(brewery[i].longitude) };
-      new google.maps.Marker({
-          position: brewPos,
-          map: map,
-          title: brewery[i].name,
-          icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
-      });
+        const brewPos = {
+            lat: parseFloat(brewery[i].latitude),
+            lng: parseFloat(brewery[i].longitude)
+        };
+
+        checkDislikes(brewery[i].name);
+
+        if (!disliked && pins < 5) {
+            const marker = new google.maps.Marker({
+                position: brewPos,
+                map: map,
+                title: brewery[i].name,
+                icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+            });
+            markers.push(marker);
+            pins++;
+        }
     }
-  }
+}
+
+function clearMarkers() {
+    if (markers != []) {
+        for (let i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];       
+    }
+}
+
