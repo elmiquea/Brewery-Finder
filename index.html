@@ -12,98 +12,101 @@
 </head>
 
 <body>
-        <header>
+    <header>
+        <div id="nav">
             <a class="button is-dark" id="see-fave-brews" href="./index2.html">Favorites</a>
-            <a class = "button is-dark" id="clear-dislikes">Clear Dislikes</a>
-            <h1 class="has-text-centered">Brewery Finder</h1>
-        </header>
+            <a class="button is-dark" id="see-news" href="./news.html">News</a>
+            <a class="button is-dark" id="clear-dislikes">Clear Dislikes</a>
+        </div>
+        <h1 class="has-text-centered">Brewery Finder</h1>
+    </header>
 
-        <div class="columns is-centered is-fullheight-100vh">
-            <div class="column has-text-centered">
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <span class="select">
-                            <select id="dropdown-ip">
-                                <option>micro</option>
-                                <option>nano</option>
-                                <option>brewpub</option>
-                            </select>
-                        </span>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-globe"></i>
-                        </span>
-                    </p>
-                </div>
-
-                <p class="control">
-                    <a class="button is-warning" id="search-button-ip">
-                        Search by IP
-                    </a>
+    <div class="columns is-centered is-fullheight-100vh">
+        <div class="column has-text-centered">
+            <div class="field">
+                <p class="control has-icons-left">
+                    <span class="select">
+                        <select id="dropdown-ip">
+                            <option>micro</option>
+                            <option>nano</option>
+                            <option>brewpub</option>
+                        </select>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-globe"></i>
+                    </span>
                 </p>
             </div>
 
-            <div class="column has-text-centered">
-                <div class="field">
-                    <p class="control has-icons-left">
-                        <span class="select">
-                            <select id="dropdown-zip">
-                                <option>micro</option>
-                                <option>nano</option>
-                                <option>brewpub</option>
-                            </select>
-                        </span>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-globe"></i>
-                        </span>
-                    </p>
-                </div>
-
-                <div class="field">
-                    <p class="control">
-                        <input class="input is-rounded" style="width: 30%" type="number" placeholder="Enter Zip Code"
-                            id="input-search">
-                    </p>
-                </div>
-
-                <div class="field">
-                    <p class="control">
-                        <a class="button is-warning" id="search-button-zip">
-                            Search by Zip
-                        </a>
-                    </p>
-                </div>
-            </div>
+            <p class="control">
+                <a class="button is-warning" id="search-button-ip">
+                    Search by IP
+                </a>
+            </p>
         </div>
 
-
-        <div class="columns is-centered is-multiline favebox rembox" id="card-section"> </div>
-
-        <div id="empty"></div>
-
-        <footer id="footer">
-            <div class="columns is-centered">
-                <div class="column has-text-centered">
-                    <a class="button github" href="https://github.com/conartisttt" target="_blank">
-                        Conner Martin
-                    </a>
-                </div>
-                <div class="column has-text-centered">
-                    <a class="button github" href="https://github.com/corybenton" target="_blank">
-                        Cory Benton
-                    </a>
-                </div>
-                <div class="column has-text-centered">
-                    <a class="button github" href="https://github.com/elmiquea" target="_blank">
-                        Elvis Queliz
-                    </a>
-                </div>
-
+        <div class="column has-text-centered">
+            <div class="field">
+                <p class="control has-icons-left">
+                    <span class="select">
+                        <select id="dropdown-zip">
+                            <option>micro</option>
+                            <option>nano</option>
+                            <option>brewpub</option>
+                        </select>
+                    </span>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-globe"></i>
+                    </span>
+                </p>
             </div>
-        </footer>
 
-        <script src="./script.js"></script>
+            <div class="field">
+                <p class="control">
+                    <input class="input is-rounded" style="width: 30%" type="number" placeholder="Enter Zip Code"
+                        id="input-search">
+                </p>
+            </div>
 
-   
+            <div class="field">
+                <p class="control">
+                    <a class="button is-warning" id="search-button-zip">
+                        Search by Zip
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="columns is-centered is-multiline favebox rembox" id="card-section"> </div>
+
+    <div id="empty"></div>
+
+    <footer id="footer">
+        <div class="columns is-centered">
+            <div class="column has-text-centered">
+                <a class="button github" href="https://github.com/conartisttt" target="_blank">
+                    Conner Martin
+                </a>
+            </div>
+            <div class="column has-text-centered">
+                <a class="button github" href="https://github.com/corybenton" target="_blank">
+                    Cory Benton
+                </a>
+            </div>
+            <div class="column has-text-centered">
+                <a class="button github" href="https://github.com/elmiquea" target="_blank">
+                    Elvis Queliz
+                </a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+
+
 </body>
 
 </html>

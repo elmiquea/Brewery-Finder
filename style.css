@@ -31,8 +31,14 @@ h1 {
     background-color: greenyellow;
 }
 
-#clear-dislikes {
-    float: right;
+#nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+h2 {
+    font-size: 40px;
+    color: yellow;
 }
 
 .none {
@@ -63,5 +69,5 @@ h1 {
 }
 
 .card {
-    background-image: linear-gradient(to bottom right, rgba(250, 154, 0, 0.69), rgba(255, 255, 0, 0.75));
+    background-image: linear-gradient(to bottom right, rgba(255, 255, 0, 0.75), rgba(250, 154, 0, 0.69));
 }
