@@ -301,14 +301,18 @@ async function initMap(brewery, lat, lon) {
         title: "You are Here.",
     });
 
+
     clearMarkers();
 
     let pins = 0;
+
+
     for (let i = 0; i < brewery.length; i++) {
         const brewPos = {
             lat: parseFloat(brewery[i].latitude),
             lng: parseFloat(brewery[i].longitude)
         };
+
 
         checkDislikes(brewery[i].name);
 
@@ -331,6 +335,16 @@ function clearMarkers() {
             markers[i].setMap(null);
         }
         markers = [];       
+    }
+}
+
+
+        new google.maps.Marker({
+            position: brewPos,
+            map: map,
+            title: brewery[i].name,
+            icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+        });
     }
 }
 

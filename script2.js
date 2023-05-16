@@ -8,7 +8,7 @@ const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 function displayFave() {
     brewArray = JSON.parse(localStorage.getItem("BrewArray"));
     console.log(brewArray);
-    if ( !brewArray || brewArray == null || brewArray.length == 0) {
+    if (!brewArray || brewArray == null || brewArray.length == 0) {
         const faveBrewElE = document.getElementById("fave-brew");
         console.log("I'm empty")
         const columnDivE = document.createElement("div");
@@ -149,13 +149,19 @@ async function initMap(lat, lon) {
             lat: parseFloat(brewArray[i].lat),
             lng: parseFloat(brewArray[i].lon)
         };
+
         const marker = new google.maps.Marker({
+
+        new google.maps.Marker({
+
             position: brewPos,
             map: map,
             title: brewArray[i].name,
             icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
         });
+
         markers.push(marker);
+
     }
 }
 
