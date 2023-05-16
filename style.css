@@ -33,3 +33,33 @@ h1 {
 #clear-dislikes {
     float: right;
 }
+
+.none {
+    display: none;
+}
+
+.card {
+    border: 10px;
+    border-radius: 20px;
+}
+
+.card-header-title {
+    font-size: 30px;
+}
+
+.card:hover {
+    box-shadow: inset 0px 0px 5px yellow, 0 0 15px yellow;
+    transform: scale(1.03);
+    transition: all 0.5s ease-in-out;
+}
+
+#see-fave-brews:hover,
+#clear-dislikes:hover,
+.github:hover {
+    box-shadow: inset 0px 0px 5px yellow, 0 0 15px yellow;
+    transition: all 0.5s ease-in-out;
+}
+
+.card {
+    background-image: linear-gradient(to bottom right, rgba(250, 154, 0, 0.69), rgba(255, 255, 0, 0.75));
+}

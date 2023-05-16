@@ -15,7 +15,8 @@ Each brewery listing includes:
 - Name
 - Address
 - Website
-- A button to select if the user liked the brewery or not
+- A button to select if the user liked the brewery
+- A button to select if the user disliked the brewery
 
 * **The following image shows a demonstration of the web applications appearance and functionality:**
 
@@ -39,14 +40,8 @@ Each brewery listing includes:
 ## Other Details:
 
 - create an application that solves a real-world problem. 
-- create acceptance criteria
 - create presentation for "investors" to pitch our project
-- use CSS framework other than bootstrap
 - deploy to github pages
-- accept and respond to user input
-- use at least two server-side API's
-- does not use alerts, confirms, or prompts
-- uses local storage to store persistent data
 - be responsive (to different screen sizes?)
 - have a polished UI
 - have a clean repository

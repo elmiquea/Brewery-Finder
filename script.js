@@ -102,6 +102,8 @@ function buildBreweryCards(brewery) {
         const breweryCity = brewery[i].city;
         const breweryState = brewery[i].state;
         const breweryWebsite = brewery[i].website_url;
+        const breweryLat = brewery[i].latitude;
+        const breweryLon = brewery[i].longitude;
         const breweryAddress = breweryStreet + ", " + breweryCity + ", " + breweryState;
         const columnDiv = document.createElement("div");
 
@@ -154,6 +156,8 @@ function buildBreweryCards(brewery) {
             likeButton.setAttribute("data-address", breweryAddress);
             likeButton.setAttribute("data-phone", breweryPhone);
             likeButton.setAttribute("data-url", breweryWebsite);
+            likeButton.setAttribute("data-lat", breweryLat);
+            likeButton.setAttribute("data-lon", breweryLon);
             likeButton.textContent = "Like";
             const buttonName = likeButton.getAttribute("data-name");
             cardFooter.appendChild(likeButton);
@@ -189,6 +193,8 @@ if (likeEl != null) {
                 address: element.getAttribute("data-address"),
                 phone: element.getAttribute("data-phone"),
                 url: element.getAttribute("data-url"),
+                lat: element.getAttribute("data-lat"),
+                lon: element.getAttribute("data-lon")
             }
             if (!brewArray || brewArray[0] == null) {
                 brewArray = [newEntry];
@@ -224,6 +230,8 @@ if (removeEl != null) {
     removeEl.addEventListener("click", function (event) {
         const element = event.target;
         if (element.matches(".rembox")) {
+            console.log(element);
+            element.parentElement.parentElement.parentElement.classList.add("none");
             const likedButton = element.previousElementSibling;
             likedButton.classList.remove("liked");
             likedButton.innerHTML = "Like";
