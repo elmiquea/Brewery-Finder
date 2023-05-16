@@ -135,7 +135,7 @@ function buildBreweryCards(brewery) {
             if (!breweryPhone) {
                 phone.textContent = "No Phone Number Available"
             } else {
-                phone.textContent = "Phone Number: " + breweryPhone;
+                phone.textContent = "Phone Number: " + breweryPhone.slice(0, 3) + "-" + breweryPhone.slice(3, 6) + "-" + breweryPhone.slice(6, 10);
             }
             console.log(breweryPhone);
             cardContent.appendChild(phone);
