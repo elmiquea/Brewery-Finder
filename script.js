@@ -13,7 +13,7 @@ const likeEl = document.querySelector(".favebox");
 let disliked;
 let markers = [];
 
-const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
+const geoAPIKey = 'a2854aef178b7d71349a4aaa2af43d1d547f3295';
 
 if (searchButtonZip != null) {
     searchButtonZip.addEventListener("click", function () {
@@ -53,6 +53,7 @@ function fetchGeo(API, dropdownIPVal) {
 
 function getBreweryIp(breweryType, lat, lon) {
     let extraSearch;
+
     if (dislikeArray === null) {
         extraSearch = 0;
     } else {
@@ -86,10 +87,9 @@ function getBreweryZip(breweryType, zip) {
         })
         .then(function (data) {
             buildBreweryCards(data);
+            findCoordZip(zip, data);
         })
 }
-
-
 
 function buildBreweryCards(brewery) {
     console.log(brewery);
@@ -301,18 +301,14 @@ async function initMap(brewery, lat, lon) {
         title: "You are Here.",
     });
 
-
     clearMarkers();
 
     let pins = 0;
-
-
     for (let i = 0; i < brewery.length; i++) {
         const brewPos = {
             lat: parseFloat(brewery[i].latitude),
             lng: parseFloat(brewery[i].longitude)
         };
-
 
         checkDislikes(brewery[i].name);
 
@@ -338,3 +334,19 @@ function clearMarkers() {
     }
 }
 
+function findCoordZip(zip, brewery) {
+    const fetchUrl = "http://api.openweathermap.org/geo/1.0/zip?zip="
+        + zip + "&appid=237336740efcd4d74b2307eb0e33a4d1";
+
+    fetch(fetchUrl)
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+        })
+        .then(function (data) {
+            lat = parseFloat(data.lat);
+            lon = parseFloat(data.lon); 
+            initMap (brewery, lat, lon);
+        })
+}
