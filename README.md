@@ -1,4 +1,4 @@
-# Project-1
+# Brewery-Finder
 
 ## Description
 
@@ -8,8 +8,9 @@ The purpose of this application is to allow beer enthusiasts to find breweries n
 
 ## Features
 
-When a brewery type is selected, and search button is clicked, the five closest breweries are presented
+When a brewery type is selected, and search button is clicked, the five closest breweries are presented.
 
+When a brewery type is selected, and a zip code is entered, the five closest breweries to the center of that zip code are presented.
 
 Each brewery listing includes:
 - Name
@@ -18,9 +19,11 @@ Each brewery listing includes:
 - A button to select if the user liked the brewery
 - A button to select if the user disliked the brewery
 
+
+
 * **The following image shows a demonstration of the web applications appearance and functionality:**
 
-![applicaiton demo.](./Assets/ScreenshotOfApp.png)
+![applicaiton demo.](./assets/Screenshot.png)
 
 
 ## Technologies Used
@@ -30,7 +33,9 @@ Each brewery listing includes:
 * Bulma
 * JavaScript
 * Get Geo API
+* OpenWeather Geocoding API
 * Open Brewery API
+* Google Maps API
 
 ## Credits
 
@@ -41,8 +46,6 @@ Each brewery listing includes:
 
 - create an application that solves a real-world problem. 
 - create presentation for "investors" to pitch our project
-- deploy to github pages
-- be responsive (to different screen sizes?)
 - have a polished UI
 - have a clean repository
 - have a quality readme file with with unique name, description, technologies used, screenshot, and link to deployed application
