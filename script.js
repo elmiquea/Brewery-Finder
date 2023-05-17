@@ -168,14 +168,14 @@ function buildBreweryCards(brewery) {
                     likeButton.textContent = "Liked";
                 }
             }
-        
-        const dislikeButton = document.createElement("a");
-        dislikeButton.classList.add("card-footer-item", "rembox");
-        dislikeButton.setAttribute("data-name", breweryName);
-        dislikeButton.textContent = "Dislike";
-        cardFooter.appendChild(dislikeButton);
 
-        cards++;
+            const dislikeButton = document.createElement("a");
+            dislikeButton.classList.add("card-footer-item", "rembox");
+            dislikeButton.setAttribute("data-name", breweryName);
+            dislikeButton.textContent = "Dislike";
+            cardFooter.appendChild(dislikeButton);
+
+            cards++;
         }
     }
 };
@@ -232,35 +232,22 @@ removeEl.addEventListener("click", function (event) {
         dislikeArray.unshift(newEntry);
         localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
 
-
+        const newBrewArray = [];
         for (let i = 0; i < brewArray.length; i++) {
-                if (brewArray[i].name == newEntry) {
-                    brewArray.splice(i, 1);
-            } else {
-                for (let i = 0; i < brewArray.length; i++) {
-                    for (let j = 0; j < dislikeArray.length; j++) {
-                        if (!brewArray || brewArray == null || brewArray.length == 0 || i >= brewArray.length) {
-                        } else {
-                            if (brewArray[i].name == dislikeArray[j]) {
-                                brewArray.splice(i, 1);
-                                console.log("we have a problem")
-
-                            }
-                        }
-                    }
-
-                }
-            }
-        localStorage.setItem("BrewArray", JSON.stringify(brewArray));
-
-        for (let i = 0; i < markers.length; i++) {
-            if (markers[i].title == newEntry) {
-                markers[i].setMap(null);
+            if (Array.isArray(brewArray) && !dislikeArray.includes(brewArray[i].name)) {
+                newBrewArray.push(brewArray[i])
             }
         }
-    }
-}});
+        localStorage.setItem("BrewArray", JSON.stringify(newBrewArray));
+    };
 
+    for (let i = 0; i < markers.length; i++) {
+        if (markers[i].title == newEntry) {
+            markers[i].setMap(null);
+        }
+    }
+}
+);
 
 //event listener for clear dislikes button
 clearDislikeEl.addEventListener("click", function (event) {
