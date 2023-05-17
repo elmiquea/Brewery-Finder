@@ -4,7 +4,7 @@ const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
 const clearDislikeEl = document.getElementById("clear-dislikes");
-const seeFaveBrewEl = document.getElementById('see-fave-brews')
+const seeFaveBrewEl = document.getElementById('see-fave-brews');
 const cardSection = document.getElementById("card-section");
 let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 let dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
@@ -146,6 +146,7 @@ function buildBreweryCards(brewery) {
                 websiteLink.textContent = "No Website Available"
             } else {
                 websiteLink.href = breweryWebsite;
+                websiteLink.setAttribute("target", "_blank")
                 websiteLink.textContent = breweryWebsite;
             }
             cardContent.appendChild(websiteLink);
@@ -163,9 +164,7 @@ function buildBreweryCards(brewery) {
             likeButton.textContent = "Like";
             const buttonName = likeButton.getAttribute("data-name");
             cardFooter.appendChild(likeButton);
-            if (!brewArray || brewArray[0] == null) {
-
-            } else {
+            if (!(!brewArray || brewArray[0] == null)) {
                 for (let j = 0; j < brewArray.length; j++) {
                     if (brewArray[j].name == buttonName) {
                         likeButton.classList.add("liked");
@@ -252,20 +251,13 @@ if (removeEl != null) {
                 dislikeArray.unshift(newEntry);
             }
             localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
-
-                for (let i = 0; i < brewArray.length; i++) {
-                    for (let j = 0; j < dislikeArray.length; j++) {
-                        if (!(!brewArray || brewArray == null || i >= brewArray.length || brewArray.length == 0)) {
-                        } else {
-                            if (brewArray[i].name == dislikeArray[j]) {
-                                brewArray.splice(i, 1);
-                                console.log("we have a problem")
-                            }
-                        }
-                    }
+            const newBrewArray = [];
+            for (let i = 0; i < brewArray.length; i++) {
+                if (Array.isArray(brewArray) && !dislikeArray.includes(brewArray[i].name)) {
+                    newBrewArray.push(brewArray[i])
                 }
-                localStorage.setItem("BrewArray", JSON.stringify(brewArray));
-
+            }
+            localStorage.setItem("BrewArray", JSON.stringify(newBrewArray));
         }
     });
 }
@@ -342,7 +334,7 @@ function findCoordZip(zip, brewery) {
         })
         .then(function (data) {
             lat = parseFloat(data.lat);
-            lon = parseFloat(data.lon); 
-            initMap (brewery, lat, lon);
+            lon = parseFloat(data.lon);
+            initMap(brewery, lat, lon);
         })
 }

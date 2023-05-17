@@ -56,6 +56,7 @@ function buildNews(story) {
         cardContent.appendChild(snip);
         const websiteLink = document.createElement("a");
         websiteLink.href = url;
+        websiteLink.setAttribute("target", "_blank")
         websiteLink.textContent = "Read More: " + source;
         cardContent.appendChild(websiteLink);
     }
