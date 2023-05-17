@@ -10,6 +10,8 @@ let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
 let dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
 const removeEl = document.querySelector(".rembox");
 const likeEl = document.querySelector(".favebox");
+const searchBrewers = document.getElementById("search-button-name");
+
 let disliked;
 let markers = [];
 
@@ -350,3 +352,31 @@ function findCoordZip(zip, brewery) {
             initMap (brewery, lat, lon);
         })
 }
+
+searchBrewers.addEventListener('click', () => {
+    const input = document.getElementById('input-search-by-name');
+    const dropDownMenuValue = document.getElementById('dropdown-name').value;
+    const endpoint = 'https://api.openbrewerydb.org/breweries?by_name=' + input.value + '&per_page=5&by_type=' + dropDownMenuValue;
+    
+    fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+            cardSection.innerHTML = '';
+
+            if (data.length === 0) {
+                cardSection.innerHTML = '<h3>Sorry, no breweries with that name!</h3>';
+            } else {
+                data.forEach(brewery => {
+                    const breweryItem = document.createElement('li');
+                    const breweryLink = document.createElement('a');
+                    
+                    breweryLink.setAttribute('href', brewery.website_url);
+                    breweryLink.setAttribute('class', 'event-block');
+                    breweryItem.textContent = brewery.name;
+                    breweryLink.appendChild(breweryItem);
+                    cardSection.appendChild(breweryLink);
+                });
+            }
+        })
+        .catch(error => console.error(error));
+});
