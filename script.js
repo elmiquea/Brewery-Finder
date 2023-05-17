@@ -259,7 +259,7 @@ removeEl.addEventListener("click", function (event) {
             }
         }
     }
-});
+}});
 
 
 //event listener for clear dislikes button
