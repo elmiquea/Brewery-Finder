@@ -32,7 +32,6 @@ searchButtonIP.addEventListener("click", function () {
     fetchGeo(APIRequestIP, dropdownIPVal);
 })
 
-
 //fetch to get location from IP address
 function fetchGeo(API, dropdownIPVal) {
     fetch(API)
@@ -170,7 +169,6 @@ function buildBreweryCards(brewery) {
                 }
             }
         
-
         const dislikeButton = document.createElement("a");
         dislikeButton.classList.add("card-footer-item", "rembox");
         dislikeButton.setAttribute("data-name", breweryName);
