@@ -368,43 +368,39 @@ searchBrewers.addEventListener('click', () => {
     cardSection.innerHTML = '<h3>Sorry, no breweries with that name!</h3>';
     } else {
     data.forEach(brewery => {
-    const breweryItem = document.createElement('li');
+    const breweryItem = document.createElement('div');
+    breweryItem.classList.add("column","is-11")
+    const card = document.createElement('div');
+    card.classList.add("card")
+    const header = document.createElement('header');
+    header.classList.add("card-header")
     const breweryLink = document.createElement('a');
-   
-    breweryLink.setAttribute('href', brewery.website_url);
-    breweryLink.setAttribute('class', 'event-block');
+    const headerparag = document.createElement('p');
+    headerparag.classList.add("card-header-title","is-centered")
+    headerparag.textContent = brewery.name
+    header.appendChild(headerparag)
     
-    // Create a div element to hold the brewery information
-    const breweryInfo = document.createElement('div');
+    card.appendChild(header)
     
-    // Create a h2 element for the brewery name and append it to the div
-    const breweryName = document.createElement('h2');
-    breweryName.textContent = brewery.name;
-    breweryInfo.appendChild(breweryName);
-    
-    // Create a p element for the brewery address and append it to the div
-    const breweryAddress = document.createElement('p');
-    breweryAddress.textContent = 'Address: ' + brewery.street + ', ' + brewery.city + ', ' + brewery.state + ' ' + brewery.postal_code;
-    breweryInfo.appendChild(breweryAddress);
-    
-    // Create a p element for the brewery phone number and append it to the div
-    const breweryPhone = document.createElement('p');
+    const cardContent = document.createElement("div")
+    cardContent.classList.add("card-content")
+    const content = document.createElement("div")
+    content.classList.add("content")
+    const address = document.createElement("h3")
+    address.textContent='Address: ' + brewery.street + ', ' + brewery.city + ', ' + brewery.state + ' ' + brewery.postal_code;
+    const breweryPhone = document.createElement('h4');
     breweryPhone.textContent = 'Phone: ' + brewery.phone;
-    breweryInfo.appendChild(breweryPhone);
-    
-    // Create a p element for the brewery website and append it to the div
-    const breweryWebsite = document.createElement('p');
-    breweryWebsite.textContent = 'Website: ';
     const websiteLink = document.createElement('a');
     websiteLink.setAttribute('href', brewery.website_url);
+    
     websiteLink.textContent = brewery.website_url;
-    breweryWebsite.appendChild(websiteLink);
-    breweryInfo.appendChild(breweryWebsite);
-    
-    // Append the div to the link element
-    breweryLink.appendChild(breweryInfo);
-    
-    cardSection.appendChild(breweryLink);
+   content.appendChild (address)
+   content.appendChild(breweryPhone)
+   content.appendChild(websiteLink)
+   cardContent.appendChild(content)
+   card.appendChild(cardContent)
+    breweryItem.appendChild(card)
+    cardSection.appendChild(breweryItem)
     });
     }
     })
