@@ -4,7 +4,7 @@ const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
 const clearDislikeEl = document.getElementById("clear-dislikes");
-const seeFaveBrewEl = document.getElementById('see-fave-brews')
+const seeFaveBrewEl = document.getElementById('see-fave-brews');
 const cardSection = document.getElementById("card-section");
 let brewArray = JSON.parse(localStorage.getItem("BrewArray")) || [];
 let dislikeArray = JSON.parse(localStorage.getItem("dislikes")) || [];
@@ -142,6 +142,7 @@ function buildBreweryCards(brewery) {
                 websiteLink.textContent = "No Website Available"
             } else {
                 websiteLink.href = breweryWebsite;
+                websiteLink.setAttribute("target", "_blank")
                 websiteLink.textContent = breweryWebsite;
             }
             cardContent.appendChild(websiteLink);
@@ -239,7 +240,7 @@ removeEl.addEventListener("click", function (event) {
             } else {
                 for (let i = 0; i < brewArray.length; i++) {
                     for (let j = 0; j < dislikeArray.length; j++) {
-                        if (!brewArray || brewArray == null || brewArray.length == 0 || i >= brewArray.length) {
+                        if (!brewArray || brewArray == null || i >= brewArray.length || brewArray.length == 0) {
                         } else {
                             if (brewArray[i].name == dislikeArray[j]) {
                                 brewArray.splice(i, 1);
@@ -257,6 +258,7 @@ removeEl.addEventListener("click", function (event) {
             if (markers[i].title == newEntry) {
                 markers[i].setMap(null);
             }
+            localStorage.setItem("BrewArray", JSON.stringify(newBrewArray));
         }
     }
 }});
