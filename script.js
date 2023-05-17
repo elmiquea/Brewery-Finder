@@ -232,9 +232,23 @@ removeEl.addEventListener("click", function (event) {
         dislikeArray.unshift(newEntry);
         localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
 
+
         for (let i = 0; i < brewArray.length; i++) {
                 if (brewArray[i].name == newEntry) {
                     brewArray.splice(i, 1);
+            } else {
+                for (let i = 0; i < brewArray.length; i++) {
+                    for (let j = 0; j < dislikeArray.length; j++) {
+                        if (!brewArray || brewArray == null || brewArray.length == 0 || i >= brewArray.length) {
+                        } else {
+                            if (brewArray[i].name == dislikeArray[j]) {
+                                brewArray.splice(i, 1);
+                                console.log("we have a problem")
+
+                            }
+                        }
+                    }
+
                 }
             }
         localStorage.setItem("BrewArray", JSON.stringify(brewArray));
@@ -245,7 +259,7 @@ removeEl.addEventListener("click", function (event) {
             }
         }
     }
-});
+}});
 
 
 //event listener for clear dislikes button
