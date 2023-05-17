@@ -240,7 +240,7 @@ removeEl.addEventListener("click", function (event) {
             } else {
                 for (let i = 0; i < brewArray.length; i++) {
                     for (let j = 0; j < dislikeArray.length; j++) {
-                        if (!brewArray || brewArray == null || brewArray.length == 0 || i >= brewArray.length) {
+                        if (!brewArray || brewArray == null || i >= brewArray.length || brewArray.length == 0) {
                         } else {
                             if (brewArray[i].name == dislikeArray[j]) {
                                 brewArray.splice(i, 1);
