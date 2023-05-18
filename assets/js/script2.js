@@ -7,7 +7,7 @@ const geoAPIKey = '1488c32472f1e3a9cd08ffc586e794751254f842';
 
 //displays favorite brewerires or no liked breweries
 function displayFave() {
-    brewArray = JSON.parse(localStorage.getItem("BrewArray"));
+    brewArray = JSON.parse(localStorage.getItem("BrewArray")) || [];
     if (brewArray.length == 0) {
         const faveBrewElE = document.getElementById("fave-brew");
         const columnDivE = document.createElement("div");
