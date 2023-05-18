@@ -4,10 +4,10 @@ const dropdownZipEl = document.getElementById('dropdown-zip');
 const dropdownIPEl = document.getElementById('dropdown-ip');
 const inputEl = document.getElementById('input-search');
 const clearDislikeEl = document.getElementById("clear-dislikes");
-const seeFaveBrewEl = document.getElementById('see-fave-brews')
+const seeFaveBrewEl = document.getElementById('see-fave-brews');
 const cardSection = document.getElementById("card-section");
-let brewArray = JSON.parse(localStorage.getItem("BrewArray"));
-let dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
+let brewArray = JSON.parse(localStorage.getItem("BrewArray")) || [];
+let dislikeArray = JSON.parse(localStorage.getItem("dislikes")) || [];
 const removeEl = document.querySelector(".rembox");
 const likeEl = document.querySelector(".favebox");
 const searchBrewers = document.getElementById("search-button-name");
@@ -18,51 +18,39 @@ let markers = [];
 
 const geoAPIKey = 'a2854aef178b7d71349a4aaa2af43d1d547f3295';
 
-if (searchButtonZip != null) {
-    searchButtonZip.addEventListener("click", function () {
-        const inputVal = inputEl.value;
-        const dropdownZipVal = dropdownZipEl.value;
-        console.log(inputVal);
-        if (inputVal && inputVal.length == 5) {
-            getBreweryZip(dropdownZipVal, inputVal);
-            console.log(dropdownZipVal);
-        }
-    })
-}
+//event listener for the search by zip code
+searchButtonZip.addEventListener("click", function () {
+    const inputVal = inputEl.value;
+    const dropdownZipVal = dropdownZipEl.value;
+    if (inputVal && inputVal.length == 5) {
+        getBreweryZip(dropdownZipVal, inputVal);
+    }
+})
 
-if (searchButtonIP != null) {
-    searchButtonIP.addEventListener("click", function () {
-        const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
-        const dropdownIPVal = dropdownIPEl.value;
-        fetchGeo(APIRequestIP, dropdownIPVal);
-        console.log(dropdownIPVal);
-    })
-}
 
+//event listener for the search by IP
+searchButtonIP.addEventListener("click", function () {
+    const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
+    const dropdownIPVal = dropdownIPEl.value;
+    fetchGeo(APIRequestIP, dropdownIPVal);
+})
+
+//fetch to get location from IP address
 function fetchGeo(API, dropdownIPVal) {
     fetch(API)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data)
             const lat = data.location.latitude;
-            console.log(lat);
             const lon = data.location.longitude;
-            console.log(lon);
             getBreweryIp(dropdownIPVal, lat, lon);
         })
 };
 
+//search the Brewery API by distance according to coordinates
 function getBreweryIp(breweryType, lat, lon) {
-    let extraSearch;
-
-    if (dislikeArray === null) {
-        extraSearch = 0;
-    } else {
-        extraSearch = dislikeArray.length;
-    }
-
+    extraSearch = dislikeArray.length;
     const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_dist=" + lat +
         "," + lon + "&per_page=" + (5 + extraSearch) + "&by_type=" + breweryType;
 
@@ -73,14 +61,16 @@ function getBreweryIp(breweryType, lat, lon) {
             }
         })
         .then(function (data) {
-            console.log(data);
             buildBreweryCards(data);
             initMap(data, lat, lon);
         })
 }
 
+//search for breweries by zip code
 function getBreweryZip(breweryType, zip) {
-    const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_postal=" + zip + "&per_page=5&by_type=" + breweryType;
+    let extraSearch = dislikeArray.length;
+    const fetchUrl = "https://api.openbrewerydb.org/v1/breweries?by_postal=" +
+        zip + "&per_page=" + (5 + extraSearch) + "&by_type=" + breweryType;
 
     fetch(fetchUrl)
         .then(function (response) {
@@ -94,10 +84,9 @@ function getBreweryZip(breweryType, zip) {
         })
 }
 
+//puts together the card posted to screen
 function buildBreweryCards(brewery) {
-    console.log(brewery);
-    brewArray = JSON.parse(localStorage.getItem("BrewArray"));
-    console.log(brewArray);
+    brewArray = JSON.parse(localStorage.getItem("BrewArray")) || [];
     cardSection.innerHTML = "";
     let cards = 0;
     for (let i = 0; i < brewery.length; i++) {
@@ -112,49 +101,59 @@ function buildBreweryCards(brewery) {
         const breweryAddress = breweryStreet + ", " + breweryCity + ", " + breweryState;
         const columnDiv = document.createElement("div");
 
-        checkDislikes(brewery[i].name);
+        checkDislikes(breweryName);
 
         if (!disliked && cards < 5) {
             columnDiv.classList.add("column", "is-11");
             cardSection.appendChild(columnDiv);
+
             const cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
             columnDiv.appendChild(cardDiv);
+
             const cardHeader = document.createElement("header");
             cardHeader.classList.add("card-header");
             cardDiv.appendChild(cardHeader);
+
             const cardHeaderTitle = document.createElement("p");
             cardHeaderTitle.classList.add("card-header-title", "is-centered");
             cardHeaderTitle.textContent = breweryName;
             cardHeader.appendChild(cardHeaderTitle);
+
             const cardMain = document.createElement("div");
             cardMain.classList.add("card-content");
             cardDiv.appendChild(cardMain);
+
             const cardContent = document.createElement("div");
             cardContent.classList.add("content");
             cardMain.appendChild(cardContent);
+
             const address = document.createElement("h3");
             address.textContent = breweryStreet + ", " + breweryCity + ", " + breweryState;
             cardContent.appendChild(address);
+
             const phone = document.createElement("h4");
             if (!breweryPhone) {
                 phone.textContent = "No Phone Number Available"
             } else {
                 phone.textContent = "Phone Number: " + breweryPhone.slice(0, 3) + "-" + breweryPhone.slice(3, 6) + "-" + breweryPhone.slice(6, 10);
             }
-            console.log(breweryPhone);
             cardContent.appendChild(phone);
+
             const websiteLink = document.createElement("a");
             if (!breweryWebsite) {
                 websiteLink.textContent = "No Website Available"
             } else {
                 websiteLink.href = breweryWebsite;
+                websiteLink.setAttribute("target", "_blank")
                 websiteLink.textContent = breweryWebsite;
             }
             cardContent.appendChild(websiteLink);
+
             const cardFooter = document.createElement("footer");
             cardFooter.classList.add("card-footer");
             cardDiv.appendChild(cardFooter);
+
             const likeButton = document.createElement("a");
             likeButton.classList.add("card-footer-item", "favebox");
             likeButton.setAttribute("data-name", breweryName);
@@ -164,136 +163,113 @@ function buildBreweryCards(brewery) {
             likeButton.setAttribute("data-lat", breweryLat);
             likeButton.setAttribute("data-lon", breweryLon);
             likeButton.textContent = "Like";
+
             const buttonName = likeButton.getAttribute("data-name");
             cardFooter.appendChild(likeButton);
-            if (!brewArray || brewArray[0] == null) {
-
-            } else {
-                for (let j = 0; j < brewArray.length; j++) {
-                    if (brewArray[j].name == buttonName) {
-                        likeButton.classList.add("liked");
-                        likeButton.textContent = "Liked";
-                    }
+            for (let j = 0; j < brewArray.length; j++) {
+                if (brewArray[j].name == buttonName) {
+                    likeButton.classList.add("liked");
+                    likeButton.textContent = "Liked";
                 }
             }
+
             const dislikeButton = document.createElement("a");
             dislikeButton.classList.add("card-footer-item", "rembox");
             dislikeButton.setAttribute("data-name", breweryName);
             dislikeButton.textContent = "Dislike";
             cardFooter.appendChild(dislikeButton);
+
             cards++;
         }
-    };
-}
+    }
+};
 
-if (likeEl != null) {
-    likeEl.addEventListener("click", function (event) {
-        const element = event.target;
-        console.log(element);
-        if (element.matches(".favebox") && !element.matches("#card-section")) {
-            element.classList.add("liked");
-            element.textContent = "Liked";
-            //parse string associated with favorite box
-            const newEntry = {
-                name: element.getAttribute("data-name"),
-                address: element.getAttribute("data-address"),
-                phone: element.getAttribute("data-phone"),
-                url: element.getAttribute("data-url"),
-                lat: element.getAttribute("data-lat"),
-                lon: element.getAttribute("data-lon")
-            }
-            if (!brewArray || brewArray[0] == null) {
-                brewArray = [newEntry];
-            } else {
-                for (let i = 0; i < brewArray.length; i++) {
-                    if (brewArray[i].name == newEntry.name) {
-                        return;
-                    }
-                }
-                brewArray.unshift(newEntry);
-            }
-            localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+//event listener for like button
+likeEl.addEventListener("click", function (event) {
+    const element = event.target;
 
+    if (element.matches(".favebox") && !element.matches("#card-section")) {
+        element.classList.add("liked");
+        element.textContent = "Liked";
+        //parse string associated with favorite box
+        const newEntry = {
+            name: element.getAttribute("data-name"),
+            address: element.getAttribute("data-address"),
+            phone: element.getAttribute("data-phone"),
+            url: element.getAttribute("data-url"),
+            lat: element.getAttribute("data-lat"),
+            lon: element.getAttribute("data-lon"),
         }
-    });
-}
 
-function checkDislikes(brewName) {
-    //const dislikeArray = JSON.parse(localStorage.getItem("dislikes"));
-    if (dislikeArray != null) {
-        for (let i = 0; i < dislikeArray.length; i++) {
-            if (dislikeArray[i] == brewName) {
-                disliked = true;
-                return disliked;
-            } else {
-                disliked = false;
+        for (let i = 0; i < brewArray.length; i++) {
+            if (brewArray[i].name == newEntry.name) {
+                return;
             }
+        }
+        brewArray.unshift(newEntry);
+    }
+    localStorage.setItem("BrewArray", JSON.stringify(brewArray));
+});
+
+//checks to see if brewery has been disliked and won't post card if it has
+function checkDislikes(brewName) {
+    for (let i = 0; i < dislikeArray.length; i++) {
+        if (dislikeArray[i] == brewName) {
+            disliked = true;
+            return disliked;
+        } else {
+            disliked = false;
         }
     }
 }
 
-if (removeEl != null) {
-    removeEl.addEventListener("click", function (event) {
-        const element = event.target;
-        if (element.matches(".rembox") && !element.matches("#card-section")) {
-            console.log(element);
-            element.parentElement.parentElement.parentElement.classList.add("none");
-            const likedButton = element.previousElementSibling;
-            likedButton.classList.remove("liked");
-            likedButton.innerHTML = "Like";
-            //parse string associated with favorite box
-            const newEntry = element.getAttribute("data-name")
+//event listener for dislike box
+removeEl.addEventListener("click", function (event) {
+    const element = event.target;
+    if (element.matches(".rembox") && !element.matches("#card-section")) {
+        element.parentElement.parentElement.parentElement.classList.add("none");
+        const likedButton = element.previousElementSibling;
+        likedButton.classList.remove("liked");
+        likedButton.innerHTML = "Like";
 
-            if (dislikeArray === null) {
-                dislikeArray = [newEntry];
-            } else {
-                for (let i = 0; i < dislikeArray.length; i++) {
-                    if (dislikeArray[i] == newEntry) {
-                        return;
-                    }
-                }
-                dislikeArray.unshift(newEntry);
-            }
-            localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
-            if (!brewArray || brewArray == null || brewArray.length == 0) {
-
-            } else {
-                for (let i = 0; i < brewArray.length; i++) {
-                    for (let j = 0; j < dislikeArray.length; j++) {
-                        if (!brewArray || brewArray == null || brewArray.length == 0) {
-                        } else {
-                            if (brewArray[i].name == dislikeArray[j]) {
-                                brewArray.splice(i, 1);
-                                console.log("we have a problem")
-
-                            }
-                        }
-                    }
-                }
-                localStorage.setItem("BrewArray", JSON.stringify(brewArray));
-
-            }
-        }
-    });
-}
-
-if (clearDislikeEl != null) {
-    clearDislikeEl.addEventListener("click", function (event) {
-        const element = event.target;
-        const len = dislikeArray.length
-        if (element.matches("#clear-dislikes")) {
-            for (let i = len; i > 0; i--) {
-                dislikeArray.pop();
-            }
-        }
+        const newEntry = element.getAttribute("data-name");
+        dislikeArray.unshift(newEntry);
         localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
-    });
-}
 
+        const newBrewArray = [];
+        for (let i = 0; i < brewArray.length; i++) {
+            if (Array.isArray(brewArray) && !dislikeArray.includes(brewArray[i].name)) {
+                newBrewArray.push(brewArray[i])
+            }
+        }
+        localStorage.setItem("BrewArray", JSON.stringify(newBrewArray));
+
+        for (let i = 0; i < markers.length; i++) {
+            if (markers[i].title == newEntry) {
+                markers[i].setMap(null);
+            }
+        }
+    }
+});
+
+
+//event listener for clear dislikes button
+clearDislikeEl.addEventListener("click", function (event) {
+    const element = event.target;
+    const len = dislikeArray.length;
+    if (element.matches("#clear-dislikes")) {
+        for (let i = len; i > 0; i--) {
+            dislikeArray.pop();
+        }
+    }
+    localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
+});
+
+//puts map on page with markers
 async function initMap(brewery, lat, lon) {
     const { Map } = await google.maps.importLibrary("maps");
     const myPos = { lat: lat, lng: lon };
-    map = new Map(document.getElementById("map"), {
+    let map = new Map(document.getElementById("map"), {
         center: myPos,
         zoom: 10,
     });
@@ -328,15 +304,15 @@ async function initMap(brewery, lat, lon) {
     }
 }
 
+//clears Markers from map to prepare for new markers to be added
 function clearMarkers() {
-    if (markers != []) {
-        for (let i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
-        }
-        markers = [];
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
     }
+    markers = [];
 }
 
+//fetch for getting coordinates from zip code for map when searching by zip
 function findCoordZip(zip, brewery) {
     const fetchUrl = "http://api.openweathermap.org/geo/1.0/zip?zip="
         + zip + "&appid=237336740efcd4d74b2307eb0e33a4d1";
@@ -349,10 +325,11 @@ function findCoordZip(zip, brewery) {
         })
         .then(function (data) {
             lat = parseFloat(data.lat);
-            lon = parseFloat(data.lon); 
-            initMap (brewery, lat, lon);
+            lon = parseFloat(data.lon);
+            initMap(brewery, lat, lon);
         })
 }
+<<<<<<< HEAD:script.js
 
 searchBrewers.addEventListener('click', () => {
     const input = document.getElementById('input-search-by-name');
@@ -410,3 +387,5 @@ searchBrewers.addEventListener('click', () => {
   
   
   
+=======
+>>>>>>> 27a22a9ad1edb115e074dfa64bc3ea558edd68c9:assets/js/script.js
