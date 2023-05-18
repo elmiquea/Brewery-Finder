@@ -27,7 +27,6 @@ searchButtonZip.addEventListener("click", function () {
     }
 })
 
-
 //event listener for the search by IP
 searchButtonIP.addEventListener("click", function () {
     const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
@@ -296,7 +295,7 @@ async function initMap(brewery, lat, lon) {
                 position: brewPos,
                 map: map,
                 title: brewery[i].name,
-                icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+                icon: "https://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
             });
             markers.push(marker);
             pins++;
@@ -314,7 +313,7 @@ function clearMarkers() {
 
 //fetch for getting coordinates from zip code for map when searching by zip
 function findCoordZip(zip, brewery) {
-    const fetchUrl = "http://api.openweathermap.org/geo/1.0/zip?zip="
+    const fetchUrl = "https://api.openweathermap.org/geo/1.0/zip?zip="
         + zip + "&appid=237336740efcd4d74b2307eb0e33a4d1";
 
     fetch(fetchUrl)
