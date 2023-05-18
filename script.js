@@ -357,53 +357,56 @@ function findCoordZip(zip, brewery) {
 searchBrewers.addEventListener('click', () => {
     const input = document.getElementById('input-search-by-name');
     const dropDownMenuValue = document.getElementById('dropdown-name').value;
-    const endpoint = 'https://api.openbrewerydb.org/breweries?by_name=' + input.value + '&per_page=5&by_type=' + dropDownMenuValue;
+   const endpoint = 'https://api.openbrewerydb.org/breweries?by_name=' + input.value + '&per_page=5&by_type=' + dropDownMenuValue;
+  
+      fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+      cardSection.innerHTML = '';
     
-    fetch(endpoint)
-    .then(response => response.json())
-    .then(data => {
-    cardSection.innerHTML = '';
-    
-    if (data.length === 0) {
-    cardSection.innerHTML = '<h3>Sorry, no breweries with that name!</h3>';
-    } else {
-    data.forEach(brewery => {
-    const breweryItem = document.createElement('div');
-    breweryItem.classList.add("column","is-11")
-    const card = document.createElement('div');
-    card.classList.add("card")
-    const header = document.createElement('header');
-    header.classList.add("card-header")
-    const breweryLink = document.createElement('a');
-    const headerparag = document.createElement('p');
-    headerparag.classList.add("card-header-title","is-centered")
-    headerparag.textContent = brewery.name
-    header.appendChild(headerparag)
-    
-    card.appendChild(header)
-    
-    const cardContent = document.createElement("div")
-    cardContent.classList.add("card-content")
-    const content = document.createElement("div")
-    content.classList.add("content")
-    const address = document.createElement("h3")
-    address.textContent='Address: ' + brewery.street + ', ' + brewery.city + ', ' + brewery.state + ' ' + brewery.postal_code;
-    const breweryPhone = document.createElement('h4');
-    breweryPhone.textContent = 'Phone: ' + brewery.phone;
-    const websiteLink = document.createElement('a');
-    websiteLink.setAttribute('href', brewery.website_url);
-    
-    websiteLink.textContent = brewery.website_url;
-   content.appendChild (address)
-   content.appendChild(breweryPhone)
-   content.appendChild(websiteLink)
-   cardContent.appendChild(content)
-   card.appendChild(cardContent)
-    breweryItem.appendChild(card)
-    cardSection.appendChild(breweryItem)
-    });
-    }
-    })
-    .catch(error => console.error(error));
-   });
-   
+      
+      if (data.length === 0) {   
+      cardSection.innerHTML = '<h3 style="color: black;">Sorry, no breweries with that name!</h3>';
+      } else {
+      data.forEach(brewery => {
+      const breweryItem = document.createElement('div');
+      breweryItem.classList.add("column","is-11")
+      const card = document.createElement('div');
+      card.classList.add("card")
+      const header = document.createElement('header');
+      header.classList.add("card-header")
+      const breweryLink = document.createElement('a');
+      const headerparag = document.createElement('p');
+      headerparag.classList.add("card-header-title","is-centered")
+      headerparag.textContent = brewery.name
+      header.appendChild(headerparag)
+      
+      card.appendChild(header)
+      
+      const cardContent = document.createElement("div")
+      cardContent.classList.add("card-content")
+      const content = document.createElement("div")
+      content.classList.add("content")
+      const address = document.createElement("h3")
+      address.textContent='Address: ' + brewery.street + ', ' + brewery.city + ', ' + brewery.state + ' ' + brewery.postal_code;
+      const breweryPhone = document.createElement('h4');
+      breweryPhone.textContent = 'Phone: ' + brewery.phone;
+      const websiteLink = document.createElement('a');
+      websiteLink.setAttribute('href', brewery.website_url);
+      
+      websiteLink.textContent = brewery.website_url;
+     content.appendChild (address)
+     content.appendChild(breweryPhone)
+     content.appendChild(websiteLink)
+     cardContent.appendChild(content)
+     card.appendChild(cardContent)
+      breweryItem.appendChild(card)
+      cardSection.appendChild(breweryItem)
+      });
+      }
+      })
+      .catch(error => console.error(error));
+     });
+  
+  
+  
