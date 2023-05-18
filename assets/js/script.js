@@ -329,7 +329,7 @@ function findCoordZip(zip, brewery) {
             initMap(brewery, lat, lon);
         })
 }
-<<<<<<< HEAD:script.js
+
 
 searchBrewers.addEventListener('click', () => {
     const input = document.getElementById('input-search-by-name');
@@ -387,5 +387,4 @@ searchBrewers.addEventListener('click', () => {
   
   
   
-=======
->>>>>>> 27a22a9ad1edb115e074dfa64bc3ea558edd68c9:assets/js/script.js
+
