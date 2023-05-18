@@ -163,7 +163,7 @@ async function initMap(lat, lon) {
             position: brewPos,
             map: map,
             title: brewArray[i].name,
-            icon: "http://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
+            icon: "https://maps.google.com/mapfiles/kml/paddle/orange-blank.png"
         });
         markers.push(marker);
     }
