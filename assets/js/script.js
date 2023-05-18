@@ -24,7 +24,6 @@ searchButtonZip.addEventListener("click", function () {
     }
 })
 
-
 //event listener for the search by IP
 searchButtonIP.addEventListener("click", function () {
     const APIRequestIP = 'https://api.getgeoapi.com/v2/ip/check?api_key=' + geoAPIKey;
