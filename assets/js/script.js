@@ -58,7 +58,7 @@ function getBreweryIp(breweryType, lat, lon) {
         })
         .then(function (data) {
             buildBreweryCards(data);
-            initMap(data, lat, lon);
+            initMap(data, lat, lon, 10);
         })
 }
 
@@ -248,7 +248,6 @@ removeEl.addEventListener("click", function (event) {
     }
 });
 
-
 // clears all dislikes
 function clearDislikes() {
     const len = dislikeArray.length;
@@ -258,14 +257,13 @@ function clearDislikes() {
     localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
 }
 
-
 //puts map on page with markers
-async function initMap(brewery, lat, lon) {
+async function initMap(brewery, lat, lon, zoom) {
     const { Map } = await google.maps.importLibrary("maps");
     const myPos = { lat: lat, lng: lon };
     let map = new Map(document.getElementById("map"), {
         center: myPos,
-        zoom: 10,
+        zoom: zoom,
     });
 
     new google.maps.Marker({
@@ -277,8 +275,9 @@ async function initMap(brewery, lat, lon) {
     clearMarkers();
 
     let pins = 0;
+    let brewPos;
     for (let i = 0; i < brewery.length; i++) {
-        const brewPos = {
+        brewPos = {
             lat: parseFloat(brewery[i].latitude),
             lng: parseFloat(brewery[i].longitude)
         };
@@ -320,14 +319,14 @@ function findCoordZip(zip, brewery) {
         .then(function (data) {
             lat = parseFloat(data.lat);
             lon = parseFloat(data.lon);
-            initMap(brewery, lat, lon);
+            initMap(brewery, lat, lon, 12);
         })
 }
 
-//model to confirm clearing dislikes
+//modal to confirm clearing dislikes
 $(function () {
     $("#dialog-confirm").dialog({
-        position: {my: "center", at: "center", of: window},
+        position: { my: "center", at: "center", of: window },
         dialogClass: "fixed",
         resizable: false,
         height: "auto",
@@ -335,11 +334,11 @@ $(function () {
         modal: true,
         autoOpen: false,
         buttons: {
-            "Clear Dislikes": 
-            function () {
-                $(this).dialog("close");
-                clearDislikes();
-            },
+            "Clear Dislikes":
+                function () {
+                    $(this).dialog("close");
+                    clearDislikes();
+                },
             Cancel: function () {
                 $(this).dialog("close");
             }
