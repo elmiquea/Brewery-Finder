@@ -4,7 +4,7 @@
 
 The purpose of this application is to allow beer enthusiasts to find breweries near them so that they can try local beers.
 
-* **The final result can be found here:** [Brewery Finder](https://elmiquea.github.io/Project-1/)
+* **The final result can be found here:** [Brewery Finder](https://elmiquea.github.io/Brewery-Finder/)
 
 ## Features
 
