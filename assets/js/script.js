@@ -249,17 +249,15 @@ removeEl.addEventListener("click", function (event) {
 });
 
 
-//event listener for clear dislikes button
-clearDislikeEl.addEventListener("click", function (event) {
-    const element = event.target;
+// clears all dislikes
+function clearDislikes() {
     const len = dislikeArray.length;
-    if (element.matches("#clear-dislikes")) {
-        for (let i = len; i > 0; i--) {
-            dislikeArray.pop();
-        }
+    for (let i = len; i > 0; i--) {
+        dislikeArray.pop();
     }
     localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
-});
+}
+
 
 //puts map on page with markers
 async function initMap(brewery, lat, lon) {
@@ -325,3 +323,29 @@ function findCoordZip(zip, brewery) {
             initMap(brewery, lat, lon);
         })
 }
+
+//model to confirm clearing dislikes
+$(function () {
+    $("#dialog-confirm").dialog({
+        position: {my: "center", at: "center", of: window},
+        dialogClass: "fixed",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        autoOpen: false,
+        buttons: {
+            "Clear Dislikes": 
+            function () {
+                $(this).dialog("close");
+                clearDislikes();
+            },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $('#clear-dislikes').click(function () {
+        $("#dialog-confirm").dialog('open');
+    })
+});

@@ -78,3 +78,8 @@ h2 {
     width: 80%;
     margin: 5% 10%;
 }
+
+.fixed {
+    position: fixed;
+    
+}
