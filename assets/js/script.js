@@ -75,8 +75,7 @@ function getBreweryZip(breweryType, zip) {
             }
         })
         .then(function (data) {
-            buildBreweryCards(data);
-            findCoordZip(zip, data);
+            checkCoords(data, zip);
         })
 }
 
@@ -96,7 +95,7 @@ function buildBreweryCards(brewery) {
         const breweryLon = brewery[i].longitude;
         const breweryAddress = breweryStreet + ", " + breweryCity + ", " + breweryState;
         const columnDiv = document.createElement("div");
-
+        
         checkDislikes(breweryName);
 
         if (!disliked && cards < 5) {
@@ -348,3 +347,30 @@ $(function () {
         $("#dialog-confirm").dialog('open');
     })
 });
+
+//if coordinates are not already known, adds them 
+async function checkCoords(brewery, zip) {
+    for (let i = 0; i < brewery.length; i++) {
+        if (!brewery[i].latitude) {
+            const brewAddress = brewery[i].street.replace(/ /g, "+") + "+" + brewery[i].city.replace(/ /g, "+")
+                + "+" + brewery[i].state.replace(/ /g, "+");
+            const fetchUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + brewAddress
+                + "&key=AIzaSyApbisIoWQPW4EqhgA6UTIw5fG_rUA00Us";
+
+            await fetch(fetchUrl)
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(function (data) {
+                    brewery[i].latitude = data.results[0].geometry.location.lat;
+                    brewery[i].longitude = data.results[0].geometry.location.lng;
+                });
+        }
+    }
+    buildBreweryCards(brewery);
+    findCoordZip(zip, brewery);
+}
+
+
