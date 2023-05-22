@@ -8,6 +8,9 @@ body {
 h1 {
     font-size: 80px;
     color: yellow;
+    font-weight: bold;
+    padding: 10px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .link {
@@ -37,10 +40,11 @@ h1 {
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 50px;
     color: yellow;
+    font-family: 'Josefin Sans', sans-serif;
+    text-decoration: underline;
 }
-
 
 .none {
     display: none;
@@ -62,6 +66,7 @@ h2 {
 }
 
 #see-fave-brews:hover,
+#see-news:hover,
 #clear-dislikes:hover,
 .github:hover,
 #back:hover {
@@ -77,4 +82,9 @@ h2 {
     height: 400px;
     width: 80%;
     margin: 5% 10%;
+}
+
+.fixed {
+    position: fixed;
+    
 }

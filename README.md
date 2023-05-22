@@ -4,7 +4,7 @@
 
 The purpose of this application is to allow beer enthusiasts to find breweries near them so that they can try local beers.
 
-* **The final result can be found here:** [Brewery Finder](https://elmiquea.github.io/Project-1/)
+* **The final result can be found here:** [Brewery Finder](https://elmiquea.github.io/Brewery-Finder/)
 
 ## Features
 
@@ -48,12 +48,16 @@ News Page:
 
 * HTML
 * CSS
-* Bulma
 * JavaScript
+* Jquery
+* Jquery UI
+* Bulma
+* Google Fonts
 * Get Geo API
 * OpenWeather Geocoding API
 * Open Brewery API
-* Google Maps API
+* Google Maps JavaScript API
+* Google Maps Geocoding API
 * News API
 
 ## Credits

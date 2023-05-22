@@ -61,7 +61,7 @@ function getBreweryIp(breweryType, lat, lon) {
         })
         .then(function (data) {
             buildBreweryCards(data);
-            initMap(data, lat, lon);
+            initMap(data, lat, lon, 10);
         })
 }
 
@@ -78,8 +78,7 @@ function getBreweryZip(breweryType, zip) {
             }
         })
         .then(function (data) {
-            buildBreweryCards(data);
-            findCoordZip(zip, data);
+            checkCoords(data, zip);
         })
 }
 
@@ -99,7 +98,7 @@ function buildBreweryCards(brewery) {
         const breweryLon = brewery[i].longitude;
         const breweryAddress = breweryStreet + ", " + breweryCity + ", " + breweryState;
         const columnDiv = document.createElement("div");
-
+        
         checkDislikes(breweryName);
 
         if (!disliked && cards < 5) {
@@ -251,26 +250,22 @@ removeEl.addEventListener("click", function (event) {
     }
 });
 
-
-//event listener for clear dislikes button
-clearDislikeEl.addEventListener("click", function (event) {
-    const element = event.target;
+// clears all dislikes
+function clearDislikes() {
     const len = dislikeArray.length;
-    if (element.matches("#clear-dislikes")) {
-        for (let i = len; i > 0; i--) {
-            dislikeArray.pop();
-        }
+    for (let i = len; i > 0; i--) {
+        dislikeArray.pop();
     }
     localStorage.setItem("dislikes", JSON.stringify(dislikeArray));
-});
+}
 
 //puts map on page with markers
-async function initMap(brewery, lat, lon) {
+async function initMap(brewery, lat, lon, zoom) {
     const { Map } = await google.maps.importLibrary("maps");
     const myPos = { lat: lat, lng: lon };
     let map = new Map(document.getElementById("map"), {
         center: myPos,
-        zoom: 10,
+        zoom: zoom,
     });
 
     new google.maps.Marker({
@@ -282,8 +277,9 @@ async function initMap(brewery, lat, lon) {
     clearMarkers();
 
     let pins = 0;
+    let brewPos;
     for (let i = 0; i < brewery.length; i++) {
-        const brewPos = {
+        brewPos = {
             lat: parseFloat(brewery[i].latitude),
             lng: parseFloat(brewery[i].longitude)
         };
@@ -325,9 +321,62 @@ function findCoordZip(zip, brewery) {
         .then(function (data) {
             lat = parseFloat(data.lat);
             lon = parseFloat(data.lon);
-            initMap(brewery, lat, lon);
+            initMap(brewery, lat, lon, 12);
         })
 }
+
+//modal to confirm clearing dislikes
+$(function () {
+    $("#dialog-confirm").dialog({
+        position: { my: "center", at: "center", of: window },
+        dialogClass: "fixed",
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        autoOpen: false,
+        buttons: {
+            "Clear Dislikes":
+                function () {
+                    $(this).dialog("close");
+                    clearDislikes();
+                },
+            Cancel: function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $('#clear-dislikes').click(function () {
+        $("#dialog-confirm").dialog('open');
+    })
+});
+
+//if coordinates are not already known, adds them 
+async function checkCoords(brewery, zip) {
+    for (let i = 0; i < brewery.length; i++) {
+        if (!brewery[i].latitude) {
+            const brewAddress = brewery[i].street.replace(/ /g, "+") + "+" + brewery[i].city.replace(/ /g, "+")
+                + "+" + brewery[i].state.replace(/ /g, "+");
+            const fetchUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + brewAddress
+                + "&key=AIzaSyApbisIoWQPW4EqhgA6UTIw5fG_rUA00Us";
+
+            await fetch(fetchUrl)
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(function (data) {
+                    brewery[i].latitude = data.results[0].geometry.location.lat;
+                    brewery[i].longitude = data.results[0].geometry.location.lng;
+                });
+        }
+    }
+    buildBreweryCards(brewery);
+    findCoordZip(zip, brewery);
+}
+
+
 
 
 searchBrewers.addEventListener('click', () => {
