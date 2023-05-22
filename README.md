@@ -48,12 +48,16 @@ News Page:
 
 * HTML
 * CSS
-* Bulma
 * JavaScript
+* Jquery
+* Jquery UI
+* Bulma
+* Google Fonts
 * Get Geo API
 * OpenWeather Geocoding API
 * Open Brewery API
-* Google Maps API
+* Google Maps JavaScript API
+* Google Maps Geocoding API
 * News API
 
 ## Credits
