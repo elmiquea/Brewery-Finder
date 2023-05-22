@@ -379,6 +379,7 @@ async function checkCoords(brewery, zip) {
 
 
 
+
 searchBrewers.addEventListener('click', () => {
     const input = document.getElementById('input-search-by-name');
     const dropDownMenuValue = document.getElementById('dropdown-name').value;
@@ -435,4 +436,6 @@ searchBrewers.addEventListener('click', () => {
   
   
   
+
+
 
